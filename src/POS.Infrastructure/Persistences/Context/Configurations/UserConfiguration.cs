@@ -19,10 +19,5 @@ public class UserConfiguration : IEntityTypeConfiguration<User>
         builder.Property(e => e.FirstName).HasMaxLength(100).HasColumnName("first_name");
         builder.Property(e => e.LastName).HasMaxLength(100).HasColumnName("last_name");
         builder.Property(e => e.Password).HasMaxLength(100).HasColumnName("password");
-        builder
-            .Property(e => e.RegistrationDate)
-            .HasDefaultValueSql("CURRENT_TIMESTAMP")
-            .HasColumnType("timestamp without time zone")
-            .HasColumnName("registration_date");
     }
 }
