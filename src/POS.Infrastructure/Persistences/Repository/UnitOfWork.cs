@@ -8,7 +8,7 @@ public class UnitOfWork : IUnitOfWork
     public IUserRepositoy Users { get; private set; }
     private readonly DestinationConnectContext _context;
 
-    public UnitOfWork(IUserRepositoy users, DestinationConnectContext context)
+    public UnitOfWork(DestinationConnectContext context)
     {
         _context = context;
         Users = new UserRespositoy(context);
