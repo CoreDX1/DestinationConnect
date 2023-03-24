@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace POS.Domain.Entities;
+﻿namespace POS.Domain.Entities;
 
 public partial class User
 {
@@ -14,6 +11,4 @@ public partial class User
     public string Email { get; set; } = null!;
 
     public string Password { get; set; } = null!;
-
-    public DateTime? RegistrationDate { get; set; }
 }
