@@ -18,11 +18,11 @@ public class UserRespositoy : IUserRepositoy
         return record > 0;
     }
 
-    public async Task<User> GetUser(string email, string password)
+    public async Task<User> GetUser(User user)
     {
         User? response = await _context.Users
             .AsNoTracking()
-            .FirstOrDefaultAsync(x => x.Email == email && x.Password == password);
+            .FirstOrDefaultAsync(x => x.Email == user.Email && x.Password == user.Password);
         return response!;
     }
 }
