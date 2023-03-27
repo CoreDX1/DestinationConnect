@@ -1,5 +1,6 @@
 import { component$, Slot } from "@builder.io/qwik"
 import { routeLoader$ } from "@builder.io/qwik-city"
+import Header from "~/components/header/header"
 
 export const useServerTimeLoader = routeLoader$(() => {
     return {
@@ -8,5 +9,10 @@ export const useServerTimeLoader = routeLoader$(() => {
 })
 
 export default component$(() => {
-    return <Slot />
+    return (
+        <>
+            <Header />
+            <Slot />
+        </>
+    )
 })
