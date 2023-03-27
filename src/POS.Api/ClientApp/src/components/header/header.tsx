@@ -1,8 +1,8 @@
 import { component$ } from "@builder.io/qwik"
-import facebook from "../../../public/Logo/facebook-logo-meta.svg"
-import youtube from "../../../public/Logo/youtube.svg"
-import instagram from "../../../public/Logo/instagram.svg"
-import arrow from "../../../public/Logo/arrow-down.svg"
+import facebook from "/Logo/facebook-logo-meta.svg"
+import youtube from "/Logo/youtube.svg"
+import instagram from "/Logo/instagram.svg"
+import arrow from "/Logo/arrow-down.svg"
 
 const icon = [
     {
@@ -42,21 +42,23 @@ export default component$(() => {
     return (
         <header>
             <nav class="flex flex-row justify-center items-center gap-16">
-                    <a class="text-[30px]" href="/home">Titulo</a>
-                    <ul>
-                        {listMenu.map((item, index) => (
-                            <li key={index} class="inline-block px-5">
-                                <a class="pr-1.5" href={item.href}>
-                                    {item.name}
-                                </a>
-                                <img
-                                    src={arrow}
-                                    class="inline-block"
-                                    alt="arrow-down"
-                                />
-                            </li>
-                        ))}
-                    </ul>
+                <a class="text-[30px]" href="/home">
+                    Titulo
+                </a>
+                <ul>
+                    {listMenu.map((item, index) => (
+                        <li key={index} class="inline-block px-5">
+                            <a class="pr-1.5" href={item.href}>
+                                {item.name}
+                            </a>
+                            <img
+                                src={arrow}
+                                class="inline-block"
+                                alt="arrow-down"
+                            />
+                        </li>
+                    ))}
+                </ul>
                 <div>
                     <ul>
                         {icon.map((item, index) => (
