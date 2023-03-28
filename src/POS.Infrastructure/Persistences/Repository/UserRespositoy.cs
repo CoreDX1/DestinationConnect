@@ -25,4 +25,10 @@ public class UserRespositoy : IUserRepositoy
             .FirstOrDefaultAsync(x => x.Email == user.Email && x.Password == user.Password);
         return response!;
     }
+
+    public async Task<bool> ValidateEmail(User user)
+    {
+        bool response = await _context.Users.AnyAsync(x => x.Email.Equals(user.Email));
+        return response;
+    }
 }

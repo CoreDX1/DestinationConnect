@@ -6,4 +6,5 @@ public interface IUserRepositoy
 {
     public Task<bool> AddUser(User user);
     public Task<User> GetUser(User user);
+    public Task<bool> ValidateEmail(User user);
 }

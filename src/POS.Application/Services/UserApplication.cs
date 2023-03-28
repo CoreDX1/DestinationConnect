@@ -32,7 +32,7 @@ public class UserApplication : IUserApplication
         {
             response.Success = false;
             response.Message = ReplyMessage.MESSAGE_VALIDATE;
-            response.Errors = await IsValidateLogin(userMapper);
+            response.Errors = await IsValidateLogin(userMapper, 0);
             return response;
         }
         var account = await _unitOfWork.Users.GetUser(userMapper);
@@ -53,12 +53,12 @@ public class UserApplication : IUserApplication
     public async Task<BaseResponse<bool>> Register(User user)
     {
         var response = new BaseResponse<bool>();
-        var validation = await _validator.ValidateAsync(user);
-        if (!validation.IsValid)
+        var validation = await IsValidateLogin(user, 1);
+        if (validation.ErrorCount > 0)
         {
             response.Success = false;
             response.Message = ReplyMessage.MESSAGE_VALIDATE;
-            response.Errors = await IsValidateLogin(user);
+            response.Errors = validation;
             return response;
         }
         var account = await _unitOfWork.Users.AddUser(user);
@@ -75,18 +75,27 @@ public class UserApplication : IUserApplication
         return response;
     }
 
-    public async Task<ErrorResponseDto> IsValidateLogin(User user)
+    public async Task<ErrorResponseDto> IsValidateLogin(User user, int form)
     {
         var validate = await _validator.ValidateAsync(user);
+        var emailValidate = await _unitOfWork.Users.ValidateEmail(user);
         List<string> email = new List<string>();
         List<string> password = new List<string>();
+        if (form == 1 && emailValidate == true)
+        {
+            email.Add("El email ya existe");
+        }
         for (int i = 0; i < validate.Errors.Count(); i++)
         {
             string errorMessage = validate.Errors[i].ErrorMessage;
             if (validate.Errors[i].PropertyName == "Email")
+            {
                 email.Add(errorMessage);
+            }
             if (validate.Errors[i].PropertyName == "Password")
+            {
                 password.Add(errorMessage);
+            }
         }
         return new ErrorResponseDto { Email = email, Password = password };
     }
