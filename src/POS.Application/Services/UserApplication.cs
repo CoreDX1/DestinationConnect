@@ -1,6 +1,8 @@
 using AutoMapper;
+using FluentValidation;
 using POS.Application.Commons.Base;
 using POS.Application.DTO.Request;
+using POS.Application.DTO.Response;
 using POS.Application.Interface;
 using POS.Domain.Entities;
 using POS.Infrastructure.Persistences.Interfaces;
@@ -12,17 +14,27 @@ public class UserApplication : IUserApplication
 {
     private readonly IUnitOfWork _unitOfWork;
     private readonly IMapper _mapper;
+    private readonly IValidator<User> _validator;
 
-    public UserApplication(IUnitOfWork unitOfWork, IMapper mapper)
+    public UserApplication(IUnitOfWork unitOfWork, IMapper mapper, IValidator<User> validator)
     {
         _unitOfWork = unitOfWork;
         _mapper = mapper;
+        _validator = validator;
     }
 
     public async Task<BaseResponse<User>> Login(UserRequestDto userRequest)
     {
         var response = new BaseResponse<User>();
         User userMapper = _mapper.Map<User>(userRequest);
+        var validation = await _validator.ValidateAsync(userMapper);
+        if (!validation.IsValid)
+        {
+            response.Success = false;
+            response.Message = ReplyMessage.MESSAGE_VALIDATE;
+            response.Errors = await IsValidateLogin(userMapper);
+            return response;
+        }
         var account = await _unitOfWork.Users.GetUser(userMapper);
         if (account is null)
         {
@@ -53,5 +65,21 @@ public class UserApplication : IUserApplication
             response.Message = ReplyMessage.MESSAGE_SAVE;
         }
         return response;
+    }
+
+    public async Task<ErrorResponseDto> IsValidateLogin(User user)
+    {
+        var validate = await _validator.ValidateAsync(user);
+        List<string> email = new List<string>();
+        List<string> password = new List<string>();
+        for (int i = 0; i < validate.Errors.Count(); i++)
+        {
+            string errorMessage = validate.Errors[i].ErrorMessage;
+            if (validate.Errors[i].PropertyName == "Email")
+                email.Add(errorMessage);
+            if (validate.Errors[i].PropertyName == "Password")
+                password.Add(errorMessage);
+        }
+        return new ErrorResponseDto { Email = email, Password = password };
     }
 }
