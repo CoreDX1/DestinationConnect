@@ -1,7 +1,8 @@
 import type { QwikChangeEvent } from "@builder.io/qwik"
 import { $, component$, useStore, useSignal } from "@builder.io/qwik"
 import { useNavigate } from "@builder.io/qwik-city"
-import type { ResponseLogin, Login } from "~/Interface/IUser"
+import type { IUserResponse } from "~/Interface/Response/IUserResponse"
+import type { Login } from "~/Interface/Request/IUserRequest"
 import { User } from "~/api/UserApi"
 
 export default component$(() => {
@@ -9,7 +10,7 @@ export default component$(() => {
         email: "",
         password: "",
     })
-    const responseData = useSignal<ResponseLogin>()
+    const responseData = useSignal<IUserResponse>()
     const nav = useNavigate()
 
     const onChangePasswod = $((e: QwikChangeEvent<HTMLInputElement>): void => {
@@ -26,6 +27,7 @@ export default component$(() => {
         const res = new User("/Auth/Login")
         const data = await res.accountLogin(sign)
         responseData.value = data
+        console.log(data)
         if (data.success) {
             nav("/home")
         }
@@ -34,7 +36,9 @@ export default component$(() => {
     return (
         <section class="bg-gray-50 dark:bg-gray-900">
             <div class="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg-py-0">
-                <a href="/home">DestinationConnect</a>
+                <a class="text-[40px] font-bold py-8" href="/home">
+                    Login Form
+                </a>
                 <div class="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
                     <div class="p-6 space-y-4 md:space-y-6 sm:p-8">
                         <h1 class="text-xl font-bold leading-tight tracking-tight ">
@@ -48,6 +52,20 @@ export default component$(() => {
                                 >
                                     Your Email
                                 </label>
+                                {responseData.value?.success ? null : (
+                                    <div>
+                                        {responseData.value?.errors.email.map(
+                                            (item, index) => (
+                                                <p
+                                                    key={index}
+                                                    class="text-red-600"
+                                                >
+                                                    {item}
+                                                </p>
+                                            )
+                                        )}
+                                    </div>
+                                )}
                                 <input
                                     type="email"
                                     placeholder="user@gmail.com"
@@ -62,7 +80,20 @@ export default component$(() => {
                                 >
                                     Your Password
                                 </label>
-
+                                {responseData.value?.success ? null : (
+                                    <div>
+                                        {responseData.value?.errors.password.map(
+                                            (item, index) => (
+                                                <p
+                                                    key={index}
+                                                    class="text-red-600"
+                                                >
+                                                    {item}
+                                                </p>
+                                            )
+                                        )}
+                                    </div>
+                                )}
                                 <input
                                     type="password"
                                     placeholder="••••••••"
