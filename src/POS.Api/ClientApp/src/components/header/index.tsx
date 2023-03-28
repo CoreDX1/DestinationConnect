@@ -3,6 +3,7 @@ import facebook from "/Logo/facebook-logo-meta.svg"
 import youtube from "/Logo/youtube.svg"
 import instagram from "/Logo/instagram.svg"
 import arrow from "/Logo/arrow-down.svg"
+import { Link } from "@builder.io/qwik-city"
 
 const icon = [
     {
@@ -38,19 +39,19 @@ const listMenu = [
     },
 ]
 
-export default component$(() => {
+export const Header = component$(() => {
     return (
         <header>
             <nav class="flex flex-row justify-center items-center gap-16">
-                <a class="text-[30px]" href="/home">
+                <Link class="text-[30px]" href="/home">
                     Titulo
-                </a>
+                </Link>
                 <ul>
                     {listMenu.map((item, index) => (
                         <li key={index} class="inline-block px-5">
-                            <a class="pr-1.5" href={item.href}>
+                            <Link class="pr-1.5" href={item.href}>
                                 {item.name}
-                            </a>
+                            </Link>
                             <img
                                 src={arrow}
                                 class="inline-block"
@@ -69,8 +70,8 @@ export default component$(() => {
                                 alt="arrow-down"
                             />
                         ))}
-                        <a href="/auth/login">Login</a>
-                        <a href="/auth/register">Register</a>
+                        <Link href="/auth/login">Login</Link>
+                        <Link href="/auth/register">Register</Link>
                     </ul>
                 </div>
             </nav>
