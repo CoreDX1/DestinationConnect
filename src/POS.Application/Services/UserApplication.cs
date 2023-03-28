@@ -53,6 +53,14 @@ public class UserApplication : IUserApplication
     public async Task<BaseResponse<bool>> Register(User user)
     {
         var response = new BaseResponse<bool>();
+        var validation = await _validator.ValidateAsync(user);
+        if (!validation.IsValid)
+        {
+            response.Success = false;
+            response.Message = ReplyMessage.MESSAGE_VALIDATE;
+            response.Errors = await IsValidateLogin(user);
+            return response;
+        }
         var account = await _unitOfWork.Users.AddUser(user);
         if (!account)
         {
