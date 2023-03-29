@@ -2,8 +2,8 @@ import { component$ } from "@builder.io/qwik"
 import facebook from "/Logo/facebook-logo-meta.svg"
 import youtube from "/Logo/youtube.svg"
 import instagram from "/Logo/instagram.svg"
-import arrow from "/Logo/arrow-down.svg"
 import { Link } from "@builder.io/qwik-city"
+import Menu from "../../api/Menu2.json"
 
 const icon = [
     {
@@ -16,28 +16,6 @@ const icon = [
         src: instagram,
     },
 ]
-const listMenu = [
-    {
-        name: "Destinations",
-        href: "/home",
-    },
-    {
-        name: "Travel Tips",
-        href: "/travel-tips",
-    },
-    {
-        name: "Planning",
-        href: "/planning",
-    },
-    {
-        name: "About",
-        href: "/about",
-    },
-    {
-        name: "Shop",
-        href: "/shop",
-    },
-]
 
 export const Header = component$(() => {
     return (
@@ -47,16 +25,27 @@ export const Header = component$(() => {
                     Titulo
                 </Link>
                 <ul>
-                    {listMenu.map((item, index) => (
+                    {Menu.map((item, index) => (
                         <li key={index} class="inline-block px-5">
-                            <Link class="pr-1.5" href={item.href}>
-                                {item.name}
-                            </Link>
-                            <img
-                                src={arrow}
-                                class="inline-block"
-                                alt="arrow-down"
-                            />
+                            <Link class="pr-1.5">{item.menu}</Link>
+                            <ul>
+                                {item.submenu?.map((subitem, index) => (
+                                    <li class="py-2" key={index}>
+                                        <a> {subitem.name}</a>
+                                        <ul>
+                                            {subitem.submenu?.map(
+                                                (subsubitem, index) => (
+                                                    <li key={index}>
+                                                        <Link>
+                                                            {subsubitem}
+                                                        </Link>
+                                                    </li>
+                                                )
+                                            )}
+                                        </ul>
+                                    </li>
+                                ))}
+                            </ul>
                         </li>
                     ))}
                 </ul>
