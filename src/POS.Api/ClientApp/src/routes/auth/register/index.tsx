@@ -12,13 +12,6 @@ export default component$(() => {
     })
     const responseData = useSignal<IUserResponse>()
 
-    // const onChangefirstname = $(
-    //     (e: QwikChangeEvent<HTMLInputElement>): void => {
-    //         const { value } = e.target
-    //         sign.firstname = value
-    //     }
-    // )
-
     const webLogin = $(async () => {
         const res = new User("/Auth/Register")
         const data = await res.accountRegister(sign)
