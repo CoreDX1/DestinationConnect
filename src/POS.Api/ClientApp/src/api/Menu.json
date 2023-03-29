@@ -1,124 +1,462 @@
 [
     {
-        "Destination": {
-            "Asia": [
-                "Bali",
-                "Jakarta",
-                "Surabaya",
-                "Cambolia",
-                "India",
-                "Idonesia"
-            ],
-            "Africa": [
-                "Egipto",
-                "Mauritius",
-                "Nigeria",
-                "Tanzania",
-                "Uganda",
-                "Zambia"
-            ],
-            "Europe": [
-                "Malta",
-                "Portugal",
-                "Romania",
-                "Serbia",
-                "Slovenia",
-                "Spain",
-                "France"
-            ],
-            "Central & South America": [
-                "Argentina",
-                "Bolivia",
-                "Chile",
-                "Colombia",
-                "Costa Rica",
-                "Ecuador",
-                "Paraguay",
-                "Uruguay",
-                "Venezuela"
-            ],
-            "Middle East": [
-                "Egypt",
-                "Iran",
-                "Iraq",
-                "Israel",
-                "Jordan",
-                "Kuwait",
-                "Lebanon",
-                "Libya",
-                "Morocco",
-                "Oman",
-                "Qatar",
-                "Saudi Arabia",
-                "Syria",
-                "Tunisia",
-                "Yemen"
-            ]
-        }
-    },
-    {
-        "Travel Tips": {
-            "All categories": [
-                "Travel Tips",
-                "Tech",
-                "Budget",
-                "Digital Nomad",
-                "Social media",
-                "LifeStyle"
-            ]
-        }
-    },
-    {
-        "Planning": {
-            "Plan a trip": [
-                {
-                    "name": "Find Hotels",
-                    "description": "vi Booking.com",
-                    "icon": "imagen1.png"
-                },
-                {
-                    "name": "Find a Rental Car",
-                    "description": "via Sunny Cars",
-                    "icon": "imagen2.png"
-                },
-                {
-                    "name": "Find Cheap Flights",
-                    "description": "via Skyscanner",
-                    "icon": "imagen3.png"
-                },
-                {
-                    "name": "Get a Travel Insurance",
-                    "description": "via Heymondo",
-                    "icon": "imagen4.png"
-                },
-                {
-                    "name": "Book Tours & Atrractions",
-                    "description": "Via Viator",
-                    "icon": "imagen5.png"
-                },
-                {
-                    "name": "Book a Bus/Train/Transfer",
-                    "description": "via 12Go",
-                    "icon": "imagen6.png"
-                }
-            ]
-        }
-    },
-    {
-        "About us": [
-            "Our Story",
-            "Work with us",
-            "Instagram",
-            "Youtube"
+        "menu": "Destination",
+        "url" : "/destination",
+        "submenu": [
+            {
+                "name": "Asia",
+                "url": "/asia",
+                "submenu": [
+                    {
+                        "name": "Bali",
+                        "url": "/bali",
+                        "description": "",
+                        "icon": ""
+                    },
+                    {
+                        "name": "Jakarta",
+                        "url": "/jakarta",
+                        "description": "",
+                        "icon": ""
+                    },
+                    {
+                        "name": "Surabaya",
+                        "url": "/surabaya",
+                        "description": "",
+                        "icon": ""
+                    },
+                    {
+                        "name": "Cambolia",
+                        "url": "/cambolia",
+                        "description": "",
+                        "icon": ""
+                    },
+                    {
+                        "name": "India",
+                        "url": "/india",
+                        "description": "",
+                        "icon": ""
+                    },
+                    {
+                        "name": "Idonesia",
+                        "url": "/idonesia",
+                        "description": "",
+                        "icon": ""
+                    }
+                ]
+            },
+            {
+                "name": "Africa",
+                "url" : "/africa",
+                "submenu": [
+                    {
+                        "name": "Egipto",
+                        "url": "/egipto",
+                        "description": "",
+                        "icon": ""
+                    },
+                    {
+                        "name": "Mauritius",
+                        "url": "/mauritius",
+                        "description": "",
+                        "icon": ""
+                    },
+                    {
+                        "name": "Nigeria",
+                        "url": "/nigeria",
+                        "description": "",
+                        "icon": ""
+                    },
+                    {
+                        "name": "Tanzania",
+                        "url": "/tanzania",
+                        "description": "",
+                        "icon": ""
+                    },
+                    {
+                        "name": "Uganda",
+                        "url": "/uganda",
+                        "description": "",
+                        "icon": ""
+                    },
+                    {
+                        "name": "Zambia",
+                        "url": "/zambia",
+                        "description": "",
+                        "icon": ""
+                    }
+                ]
+            },
+            {
+                "name": "Europe",
+                "url": "/europe",
+                "submenu": [
+                    {
+                        "name": "Malta",
+                        "url": "/malta",
+                        "description": "",
+                        "icon": ""
+                    },
+                    {
+                        "name": "Portugal",
+                        "url": "/portugal",
+                        "description": "",
+                        "icon": ""
+                    },
+                    {
+                        "name": "Romania",
+                        "url": "/romania",
+                        "description": "",
+                        "icon": ""
+                    },
+                    {
+                        "name": "Serbia",
+                        "url": "/serbia",
+                        "description": "",
+                        "icon": ""
+                    },
+                    {
+                        "name": "Slovenia",
+                        "url": "/slovenia",
+                        "description": "",
+                        "icon": ""
+                    },
+                    {
+                        "name": "Spain",
+                        "url": "/spain",
+                        "description": "",
+                        "icon": ""
+                    },
+                    {
+                        "name": "France",
+                        "url": "/france",
+                        "description": "",
+                        "icon": ""
+                    }
+                ]
+            },
+            {
+                "name": "Central & South America",
+                "url": "/central-south-america",
+                "submenu": [
+                    {
+                        "name": "Argentina",
+                        "url": "/argentina",
+                        "description": "",
+                        "icon": ""
+                    },
+                    {
+                        "name": "Bolivia",
+                        "url": "/bolivia",
+                        "description": "",
+                        "icon": ""
+                    },
+                    {
+                        "name": "Chile",
+                        "url": "/chile",
+                        "description": "",
+                        "icon": ""
+                    },
+                    {
+                        "name": "Colombia",
+                        "url": "/colombia",
+                        "description": "",
+                        "icon": ""
+                    },
+                    {
+                        "name": "Costa Rica",
+                        "url": "/costa-rica",
+                        "description": "",
+                        "icon": ""
+                    },
+                    {
+                        "name": "Ecuador",
+                        "url": "/ecuador",
+                        "description": "",
+                        "icon": ""
+                    },
+                    {
+                        "name": "Paraguay",
+                        "url": "/paraguay",
+                        "description": "",
+                        "icon": ""
+                    },
+                    {
+                        "name": "Uruguay",
+                        "url": "/uruguay",
+                        "description": "",
+                        "icon": ""
+                    },
+                    {
+                        "name": "Venezuela",
+                        "url": "/venezuela",
+                        "description": "",
+                        "icon": ""
+                    }
+                ]
+            },
+            {
+                "name": "Middle East",
+                "url": "/middle-east",
+                "submenu": [
+                    {
+                        "name": "Egypt",
+                        "url": "/egypt",
+                        "description": "",
+                        "icon": ""
+                    },
+                    {
+                        "name": "Iran",
+                        "url": "/iran",
+                        "description": "",
+                        "icon": ""
+                    },
+                    {
+                        "name": "Iraq",
+                        "url": "/iraq",
+                        "description": "",
+                        "icon": ""
+                    },
+                    {
+                        "name": "Israel",
+                        "url": "/israel",
+                        "description": "",
+                        "icon": ""
+                    },
+                    {
+                        "name": "Jordan",
+                        "url": "/jordan",
+                        "description": "",
+                        "icon": ""
+                    },
+                    {
+                        "name": "Kuwait",
+                        "url": "/kuwait",
+                        "description": "",
+                        "icon": ""
+                    },
+                    {
+                        "name": "Lebanon",
+                        "url": "/lebanon",
+                        "description": "",
+                        "icon": ""
+                    },
+                    {
+                        "name": "Libya",
+                        "url": "/libya",
+                        "description": "",
+                        "icon": ""
+                    },
+                    {
+                        "name": "Morocco",
+                        "url": "/morocco",
+                        "description": "",
+                        "icon": ""
+                    },
+                    {
+                        "name": "Oman",
+                        "url": "/oman",
+                        "description": "",
+                        "icon": ""
+                    },
+                    {
+                        "name": "Qatar",
+                        "url": "/qatar",
+                        "description": "",
+                        "icon": ""
+                    },
+                    {
+                        "name": "Saudi Arabia",
+                        "url": "/saudi-arabia",
+                        "description": "",
+                        "icon": ""
+                    },
+                    {
+                        "name": "Syria",
+                        "url": "/syria",
+                        "description": "",
+                        "icon": ""
+                    },
+                    {
+                        "name": "Tunisia",
+                        "url": "/tunisia",
+                        "description": "",
+                        "icon": ""
+                    },
+                    {
+                        "name": "Yemen",
+                        "url": "/yemen",
+                        "description": "",
+                        "icon": ""
+                    }
+                ]
+            }
         ]
     },
     {
-        "Shop": [
-            "Photo Filters",
-            "Mobile Video Filters",
-            "Prints",
-            "Google Maps Location",
-            "Ebooks"
+        "menu": "Travel Tips",
+        "url": "/travel-tips",
+        "submenu": [
+            {
+                "name": "All categories",
+                "submenu": [
+                    {
+                        "name": "Travel Tips",
+                        "url": "/travel-tips",
+                        "description": "",
+                        "icon": ""
+                    },
+                    {
+                        "name": "Tech",
+                        "url": "/tech",
+                        "description": "",
+                        "icon": ""
+                    },
+                    {
+                        "name": "Budget",
+                        "url": "/budget",
+                        "description": "",
+                        "icon": ""
+                    },
+                    {
+                        "name": "Digital Nomad",
+                        "url": "/digital-nomad",
+                        "description": "",
+                        "icon": ""
+                    },
+                    {
+                        "name": "Social media",
+                        "url": "/social-media",
+                        "description": "",
+                        "icon": ""
+                    },
+                    {
+                        "name": "LifeStyle",
+                        "url": "/lifestyle",
+                        "description": "",
+                        "icon": ""
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "menu": "Travel Tips",
+        "url": "/travel-tips",
+        "submenu": [
+            {
+                "name": "Travel Tips",
+                "submenu": [
+                    {
+                        "name": "Find Hotels",
+                        "description": "vi Booking.com",
+                        "icon": "imagen1.png"
+                    },
+                    {
+                        "name": "Find a Rental Car",
+                        "description": "via Sunny Cars",
+                        "icon": "imagen2.png"
+                    },
+                    {
+                        "name": "Find Cheap Flights",
+                        "description": "via Skyscanner",
+                        "icon": "imagen3.png"
+                    },
+                    {
+                        "name": "Get a Travel Insurance",
+                        "description": "via Heymondo",
+                        "icon": "imagen4.png"
+                    },
+                    {
+                        "name": "Book Tours & Atrractions",
+                        "description": "Via Viator",
+                        "icon": "imagen5.png"
+                    },
+                    {
+                        "name": "Book a Bus/Train/Transfer",
+                        "description": "via 12Go",
+                        "icon": "imagen6.png"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "menu": "About us",
+        "url": "/about-us",
+        "submenu": [
+            {
+                "name": "",
+                "submenu": [
+                    {
+                        "name": "Our Story",
+                        "url" : "/our-story",
+                        "description": "",
+                        "icon": ""
+                    },
+                    {
+                        "name": "Work with us",
+                        "url" : "/work-with-us",
+                        "description": "",
+                        "icon": ""
+                    },
+                    {
+                        "name": "Instagram",
+                        "url" : "/instagram",
+                        "description": "",
+                        "icon": ""
+                    },
+                    {
+                        "name": "Youtube",
+                        "url" : "/youtube",
+                        "description": "",
+                        "icon": ""
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "menu": "Shop",
+        "url": "/shop",
+        "submenu": [
+            {
+                "name": "",
+                "submenu": [
+                    {
+                        "name": "Photo Filters",
+                        "url": "/photo-filters",
+                        "description": "",
+                        "icon": ""
+                        
+                    },
+                    {
+                        "name": "Mobile Video Filters",
+                        "url": "/mobile-video-filters",
+                        "description": "",
+                        "icon": ""
+                         
+                    },
+                    {
+                        "name": "Prints",
+                        "url": "/prints",
+                        "description": "",
+                        "icon": ""
+                    },
+                    {
+                        "name": "Google Maps Location",
+                        "url": "/google-maps-location",
+                        "description": "",
+                        "icon": ""
+                    },
+                    {
+                        "name": "Ebooks" ,
+                        "url": "/ebooks",
+                        "description": "",
+                        "icon": ""                         
+                    }
+                ]
+            }
         ]
     }
 ]
