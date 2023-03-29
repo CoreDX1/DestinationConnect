@@ -33,7 +33,13 @@ export const Header = component$(() => {
                             <ul>
                                 {item.submenu?.map((subitem, index) => (
                                     <li class="py-2" key={index}>
-                                        <a> {subitem.name}</a>
+                                        {subitem.url.length > 0 ? (
+                                            <a href={subitem.url}>
+                                                {subitem.name}
+                                            </a>
+                                        ) : (
+                                            ""
+                                        )}
                                         <ul>
                                             {subitem.submenu?.map(
                                                 (subsubitem, index) => (
