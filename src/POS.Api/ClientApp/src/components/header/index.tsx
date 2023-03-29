@@ -3,7 +3,7 @@ import facebook from "/Logo/facebook-logo-meta.svg"
 import youtube from "/Logo/youtube.svg"
 import instagram from "/Logo/instagram.svg"
 import { Link } from "@builder.io/qwik-city"
-import Menu from "../../api/Menu2.json"
+import Menu from "../../api/Menu.json"
 
 const icon = [
     {
@@ -27,7 +27,9 @@ export const Header = component$(() => {
                 <ul>
                     {Menu.map((item, index) => (
                         <li key={index} class="inline-block px-5">
-                            <Link class="pr-1.5">{item.menu}</Link>
+                            <a href={item.url} class="pr-1.5">
+                                {item.menu}
+                            </a>
                             <ul>
                                 {item.submenu?.map((subitem, index) => (
                                     <li class="py-2" key={index}>
@@ -36,9 +38,17 @@ export const Header = component$(() => {
                                             {subitem.submenu?.map(
                                                 (subsubitem, index) => (
                                                     <li key={index}>
-                                                        <Link>
-                                                            {subsubitem}
-                                                        </Link>
+                                                        <a>{subsubitem.name}</a>
+                                                        {subsubitem.description
+                                                            .length > 0 ? (
+                                                            <p>
+                                                                {
+                                                                    subsubitem.description
+                                                                }
+                                                            </p>
+                                                        ) : (
+                                                            ""
+                                                        )}
                                                     </li>
                                                 )
                                             )}
