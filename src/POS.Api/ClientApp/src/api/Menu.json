@@ -1,0 +1,124 @@
+[
+    {
+        "Destination": {
+            "Asia": [
+                "Bali",
+                "Jakarta",
+                "Surabaya",
+                "Cambolia",
+                "India",
+                "Idonesia"
+            ],
+            "Africa": [
+                "Egipto",
+                "Mauritius",
+                "Nigeria",
+                "Tanzania",
+                "Uganda",
+                "Zambia"
+            ],
+            "Europe": [
+                "Malta",
+                "Portugal",
+                "Romania",
+                "Serbia",
+                "Slovenia",
+                "Spain",
+                "France"
+            ],
+            "Central & South America": [
+                "Argentina",
+                "Bolivia",
+                "Chile",
+                "Colombia",
+                "Costa Rica",
+                "Ecuador",
+                "Paraguay",
+                "Uruguay",
+                "Venezuela"
+            ],
+            "Middle East": [
+                "Egypt",
+                "Iran",
+                "Iraq",
+                "Israel",
+                "Jordan",
+                "Kuwait",
+                "Lebanon",
+                "Libya",
+                "Morocco",
+                "Oman",
+                "Qatar",
+                "Saudi Arabia",
+                "Syria",
+                "Tunisia",
+                "Yemen"
+            ]
+        }
+    },
+    {
+        "Travel Tips": {
+            "All categories": [
+                "Travel Tips",
+                "Tech",
+                "Budget",
+                "Digital Nomad",
+                "Social media",
+                "LifeStyle"
+            ]
+        }
+    },
+    {
+        "Planning": {
+            "Plan a trip": [
+                {
+                    "name": "Find Hotels",
+                    "description": "vi Booking.com",
+                    "icon": "imagen1.png"
+                },
+                {
+                    "name": "Find a Rental Car",
+                    "description": "via Sunny Cars",
+                    "icon": "imagen2.png"
+                },
+                {
+                    "name": "Find Cheap Flights",
+                    "description": "via Skyscanner",
+                    "icon": "imagen3.png"
+                },
+                {
+                    "name": "Get a Travel Insurance",
+                    "description": "via Heymondo",
+                    "icon": "imagen4.png"
+                },
+                {
+                    "name": "Book Tours & Atrractions",
+                    "description": "Via Viator",
+                    "icon": "imagen5.png"
+                },
+                {
+                    "name": "Book a Bus/Train/Transfer",
+                    "description": "via 12Go",
+                    "icon": "imagen6.png"
+                }
+            ]
+        }
+    },
+    {
+        "About us": [
+            "Our Story",
+            "Work with us",
+            "Instagram",
+            "Youtube"
+        ]
+    },
+    {
+        "Shop": [
+            "Photo Filters",
+            "Mobile Video Filters",
+            "Prints",
+            "Google Maps Location",
+            "Ebooks"
+        ]
+    }
+]
