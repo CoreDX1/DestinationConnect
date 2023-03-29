@@ -1,7 +1,7 @@
 [
     {
-        "menu": "Destination",
-        "url" : "/destination",
+        "menu": "Alojamientos",
+        "url" : "/alojamientos",
         "submenu": [
             {
                 "name": "Asia",
@@ -294,15 +294,16 @@
         ]
     },
     {
-        "menu": "Travel Tips",
-        "url": "/travel-tips",
+        "menu": "Vuelos",
+        "url": "/vuelos",
         "submenu": [
             {
                 "name": "All categories",
+                "url": "/all-categories",
                 "submenu": [
                     {
                         "name": "Travel Tips",
-                        "url": "/travel-tips",
+                        "url": "/tips",
                         "description": "",
                         "icon": ""
                     },
@@ -341,11 +342,12 @@
         ]
     },
     {
-        "menu": "Travel Tips",
-        "url": "/travel-tips",
+        "menu": "Paquetes",
+        "url": "/paquetes",
         "submenu": [
             {
                 "name": "Travel Tips",
+                "url": "/travel-tips",
                 "submenu": [
                     {
                         "name": "Find Hotels",
@@ -387,6 +389,7 @@
         "submenu": [
             {
                 "name": "",
+                "url" : "",
                 "submenu": [
                     {
                         "name": "Our Story",
@@ -421,7 +424,8 @@
         "url": "/shop",
         "submenu": [
             {
-                "name": "",
+                "name": "aaaa",
+                "url" : "",
                 "submenu": [
                     {
                         "name": "Photo Filters",
