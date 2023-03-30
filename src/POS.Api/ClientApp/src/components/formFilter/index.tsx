@@ -1,7 +1,17 @@
-import { component$, useStore } from "@builder.io/qwik"
+import { $, component$, type QwikMouseEvent, useStore } from "@builder.io/qwik"
+interface IFormfilter {
+    casa: string
+    destino: string
+    fechaInicio: string
+    fechaFin: string
+    habitaciones: {
+        cama: number
+        personas: number
+    }
+}
 
 export const Formfilter = component$(() => {
-    const form = useStore({
+    const form = useStore<IFormfilter>({
         casa: "",
         destino: "",
         fechaInicio: "",
@@ -12,26 +22,52 @@ export const Formfilter = component$(() => {
         },
     })
 
+    const menuItem = [
+        {
+            id: "todos",
+            label: "Todos",
+        },
+        {
+            id: "hoteles",
+            label: "Hoteles",
+        },
+        {
+            id: "alquileres",
+            label: "Alquileres Temporarios",
+        },
+    ]
+
+    const handleSubmit = $(
+        (event: QwikMouseEvent<HTMLSpanElement, MouseEvent>) => {
+            // Id span
+            const id = (event.target as HTMLSpanElement).id
+            form.casa = id
+            console.log(form)
+        }
+    )
+
+    // const handleSubmitInput =
+
     return (
         <div class="flex justify-center pt-10">
             <div class="bg-violet-800 w-[1000px] rounded-2xl p-8 ">
                 <div class="text-white flex flex-row gap-7 pb-6 items-center">
                     <h2 class="text-2xl font-medium">Alojamientos</h2>
-                    <div>
-                        <span class="border-2 rounded-full px-4 hover:bg-white hover:text-black">
-                            Todos
-                        </span>
-                    </div>
-                    <div>
-                        <span class="border-2 rounded-full px-4">Hoteles</span>
-                    </div>
-                    <div>
-                        <span class="border-2 rounded-full px-4">
-                            Alquileres Temporarios
-                        </span>
-                    </div>
+                    {menuItem.map((item, index) => (
+                        <div key={index}>
+                            <p>
+                                <span
+                                    id={item.id}
+                                    class="border-2 rounded-full px-4"
+                                    onClick$={(): any => handleSubmit}
+                                >
+                                    {item.label}
+                                </span>
+                            </p>
+                        </div>
+                    ))}
                 </div>
-                <form class="text-white">
+                <form class="text-gray-500">
                     <label>Destino</label>
                     <input
                         type="text"
@@ -39,7 +75,11 @@ export const Formfilter = component$(() => {
                     />
                     <div>
                         <label>Fecha de inicio</label>
-                        <input type="date" placeholder="ingresa una fecha" />
+                        <input
+                            type="date"
+                            placeholder="ingresa una fecha"
+                            onClick$={handleSubmit}
+                        />
                         <label>Fecha de fin</label>
                         <input type="date" placeholder="ingresa una fecha" />
                     </div>
