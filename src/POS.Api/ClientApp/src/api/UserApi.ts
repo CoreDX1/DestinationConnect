@@ -14,7 +14,7 @@ export class User extends Base {
         super(url)
     }
 
-    public accountLogin = async (user: Login) : Promise<IUserResponse> => {
+    public accountLogin = async (user: Login): Promise<IUserResponse> => {
         const { data } = await axios<IUserResponse>({
             method: "POST",
             url: this.root,
@@ -23,8 +23,8 @@ export class User extends Base {
         return data
     }
 
-    public accountRegister = async (user: Register) : Promise<IUserResponse> => {
-        const {data} = await axios<IUserResponse>({
+    public accountRegister = async (user: Register): Promise<IUserResponse> => {
+        const { data } = await axios<IUserResponse>({
             method: "POST",
             url: this.root,
             data: user,
