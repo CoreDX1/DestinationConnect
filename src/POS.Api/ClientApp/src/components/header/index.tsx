@@ -1,11 +1,15 @@
-import { component$ } from "@builder.io/qwik"
+import { component$, useContext } from "@builder.io/qwik"
 import { Link } from "@builder.io/qwik-city"
 import Menu from "../../api/Menu.json"
 import facebook from "/Logo/avion.png"
+import { AuthContext } from "~/root"
 
 export const Header = component$(() => {
+    const auth = useContext(AuthContext)
+
     return (
         <header class="px-[290px]">
+            <div></div>
             <div class="flex justify-between">
                 <Link href="/home">
                     <img class="w-16" src={facebook} alt="Logo" />
@@ -16,6 +20,13 @@ export const Header = component$(() => {
                     <Link href="/auth/register">Register</Link>
                     <Link href="/auth/mis-viajes">Mis Viajes</Link>
                     <Link href="/auth/ayuda">Ayuda</Link>
+                    <li>
+                        <a>
+                            {auth.isLogged.value
+                                ? "Usuario logado"
+                                : "Usuario no logado"}
+                        </a>
+                    </li>
                 </div>
             </div>
             <div>
