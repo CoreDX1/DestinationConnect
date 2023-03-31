@@ -1,9 +1,19 @@
-import type { QwikChangeEvent } from "@builder.io/qwik"
+import { useContext, type QwikChangeEvent } from "@builder.io/qwik"
 import { $, component$, useStore, useSignal } from "@builder.io/qwik"
-import { useNavigate } from "@builder.io/qwik-city"
 import type { IUserResponse } from "~/Interface/Response/IUserResponse"
 import type { Login } from "~/Interface/Request/IUserRequest"
 import { User } from "~/api/UserApi"
+import { AuthContext } from "~/root"
+
+export const fakeAuthService = (credentiales: {
+    email: string
+    password: string
+}): any => {
+    console.log(credentiales)
+    console.log(`Retorna un token session (JWT Json Web Token)`)
+    const JWT = "TOKEN_SESSION_123"
+    document.cookie = `myToken=${JWT};Secure; SameSite; path=/`
+}
 
 export default component$(() => {
     const sign = useStore<Login>({
@@ -11,7 +21,8 @@ export default component$(() => {
         password: "",
     })
     const responseData = useSignal<IUserResponse>()
-    const nav = useNavigate()
+    // const nav = useNavigate()
+    const auth = useContext(AuthContext)
 
     const onChangePasswod = $((e: QwikChangeEvent<HTMLInputElement>): void => {
         const { value } = e.target
@@ -27,10 +38,8 @@ export default component$(() => {
         const res = new User("/Auth/Login")
         const data = await res.accountLogin(sign)
         responseData.value = data
-        console.log(data)
-        if (data.success) {
-            nav("/home")
-        }
+        fakeAuthService(sign)
+        if (data.success) auth.isLogged.value = true
     })
 
     return (
@@ -44,7 +53,11 @@ export default component$(() => {
                         <h1 class="text-xl font-bold leading-tight tracking-tight ">
                             Please sign in
                         </h1>
-                        <form class="space-y-5 md:space-y-6">
+                        <form
+                            preventdefault:submit
+                            onSubmit$={webLogin}
+                            class="space-y-5 md:space-y-6"
+                        >
                             <div>
                                 <label
                                     for="email"
@@ -102,11 +115,7 @@ export default component$(() => {
                                     onChange$={onChangePasswod}
                                 />
                             </div>
-                            <button
-                                class="text-black bg-blue-400 w-full p-2 rounded-lg font-bold text-[20px] hover:bg-blue-300"
-                                preventdefault:click
-                                onClick$={webLogin}
-                            >
+                            <button class="text-black bg-blue-400 w-full p-2 rounded-lg font-bold text-[20px] hover:bg-blue-300">
                                 Login
                             </button>
                             {responseData.value?.success ? null : (
