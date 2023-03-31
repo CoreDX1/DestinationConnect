@@ -1,4 +1,11 @@
-import { component$ } from "@builder.io/qwik"
+import {
+    type Signal,
+    component$,
+    createContextId,
+    useContextProvider,
+    useSignal,
+    useStore,
+} from "@builder.io/qwik"
 import {
     QwikCityProvider,
     RouterOutlet,
@@ -8,7 +15,20 @@ import { RouterHead } from "./components/router-head/router-head"
 
 import "./global.css"
 
+type AuthStoreProps = {
+    isLogged: Signal<boolean>
+}
+
+export const AuthContext = createContextId<AuthStoreProps>("Auth")
 export default component$(() => {
+    const loginState = useSignal(false)
+
+    const authStore = useStore<AuthStoreProps>({
+        isLogged: loginState,
+    })
+
+    useContextProvider(AuthContext, authStore)
+
     return (
         <QwikCityProvider>
             <head>
