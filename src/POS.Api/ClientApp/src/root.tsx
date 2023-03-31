@@ -22,7 +22,6 @@ type AuthStoreProps = {
 export const AuthContext = createContextId<AuthStoreProps>("Auth")
 export default component$(() => {
     const loginState = useSignal(false)
-
     const authStore = useStore<AuthStoreProps>({
         isLogged: loginState,
     })
