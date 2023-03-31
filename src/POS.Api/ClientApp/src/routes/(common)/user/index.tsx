@@ -8,5 +8,5 @@ export const onGet = ({ redirect, cookie }: RequestEventCommon): any => {
     }
 }
 export default component$(() => {
-    return <>Bienvenido Usuario</>
+    return <div>Bienvenido a la </div>
 })
