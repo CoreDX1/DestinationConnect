@@ -7,6 +7,7 @@ using POS.Application.Interface;
 using POS.Domain.Entities;
 using POS.Infrastructure.Persistences.Interfaces;
 using POS.Utilities.Static;
+using BC = BCrypt.Net.BCrypt;
 
 namespace POS.Application.Services;
 
@@ -35,17 +36,20 @@ public class UserApplication : IUserApplication
             response.Errors = await IsValidateLogin(userMapper, 0);
             return response;
         }
-        var account = await _unitOfWork.Users.GetUser(userMapper);
-        if (account is null)
+        User account = await _unitOfWork.Users.GetUser(userMapper);
+        if (account is not null)
         {
-            response.Success = false;
-            response.Message = ReplyMessage.MESSAGE_QUERY_EMTY;
+            if (BC.Verify(userRequest.Password, account.Password))
+            {
+                response.Success = true;
+                response.Data = account;
+                response.Message = ReplyMessage.MESSAGE_QUERY;
+            }
         }
         else
         {
-            response.Success = true;
-            response.Data = account;
-            response.Message = ReplyMessage.MESSAGE_QUERY;
+            response.Success = false;
+            response.Message = ReplyMessage.MESSAGE_QUERY_EMTY;
         }
         return response;
     }
@@ -61,6 +65,7 @@ public class UserApplication : IUserApplication
             response.Errors = validation;
             return response;
         }
+        user.Password = BC.HashPassword(user.Password);
         var account = await _unitOfWork.Users.AddUser(user);
         if (!account)
         {
