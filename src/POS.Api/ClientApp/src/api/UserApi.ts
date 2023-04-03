@@ -29,6 +29,7 @@ export class User extends Base {
             url: this.root,
             data: user,
         })
+        console.log(data.data)
         return data
     }
 }

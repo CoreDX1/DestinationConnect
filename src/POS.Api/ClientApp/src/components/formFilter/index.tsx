@@ -41,7 +41,6 @@ export const Formfilter = component$(() => {
         (event: QwikMouseEvent<HTMLSpanElement, MouseEvent>) => {
             const { id } = event.target as HTMLSpanElement
             form.casa = id
-            console.log("hola")
         }
     )
 
