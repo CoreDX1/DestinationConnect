@@ -16,8 +16,14 @@ export const Header = component$(() => {
                 </Link>
                 <div class="flex flex-row gap-3">
                     <p>Para ventas 0810 810 9994</p>
-                    <Link href="/auth/login">Login</Link>
-                    <Link href="/auth/register">Register</Link>
+                    {auth.isLogged.value ? (
+                        ""
+                    ) : (
+                        <div>
+                            <Link href="/auth/register">Register</Link>
+                            <Link href="/auth/login">Login</Link>
+                        </div>
+                    )}
                     <Link href="/auth/mis-viajes">Mis Viajes</Link>
                     <Link href="/auth/ayuda">Ayuda</Link>
                     <li>
