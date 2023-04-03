@@ -5,6 +5,7 @@ import {
     useContextProvider,
     useSignal,
     useStore,
+    useVisibleTask$,
 } from "@builder.io/qwik"
 import {
     QwikCityProvider,
@@ -20,10 +21,21 @@ type AuthStoreProps = {
 }
 
 export const AuthContext = createContextId<AuthStoreProps>("Auth")
+
 export default component$(() => {
     const loginState = useSignal(false)
     const authStore = useStore<AuthStoreProps>({
         isLogged: loginState,
+    })
+
+    useVisibleTask$(() => {
+        const value = `; ${document.cookie}`
+        const parts = value.split(`; ${"myToken"}=`)
+        if (parts.length === 2) {
+            loginState.value = true
+        } else {
+            loginState.value = false
+        }
     })
 
     useContextProvider(AuthContext, authStore)
