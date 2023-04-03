@@ -39,10 +39,9 @@ export const Formfilter = component$(() => {
 
     const handleSubmit = $(
         (event: QwikMouseEvent<HTMLSpanElement, MouseEvent>) => {
-            // Id span
-            const id = (event.target as HTMLSpanElement).id
+            const { id } = event.target as HTMLSpanElement
             form.casa = id
-            console.log(form)
+            console.log("hola")
         }
     )
 
@@ -75,11 +74,7 @@ export const Formfilter = component$(() => {
                     />
                     <div>
                         <label>Fecha de inicio</label>
-                        <input
-                            type="date"
-                            placeholder="ingresa una fecha"
-                            onClick$={handleSubmit}
-                        />
+                        <input type="date" placeholder="ingresa una fecha" />
                         <label>Fecha de fin</label>
                         <input type="date" placeholder="ingresa una fecha" />
                     </div>
