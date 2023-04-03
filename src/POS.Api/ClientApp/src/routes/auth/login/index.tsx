@@ -12,7 +12,9 @@ export const fakeAuthService = (credentiales: {
     console.log(credentiales)
     console.log(`Retorna un token session (JWT Json Web Token)`)
     const JWT = "TOKEN_SESSION_123"
-    document.cookie = `myToken=${JWT};Secure; SameSite; path=/`
+    const expireDate = new Date()
+    expireDate.setDate(expireDate.getDate() + 1)
+    document.cookie = `myToken=${JWT};Secure; SameSite; path=/; expires=${expireDate.toUTCString()}`
 }
 
 export default component$(() => {
@@ -21,7 +23,6 @@ export default component$(() => {
         password: "",
     })
     const responseData = useSignal<IUserResponse>()
-    // const nav = useNavigate()
     const auth = useContext(AuthContext)
 
     const onChangePasswod = $((e: QwikChangeEvent<HTMLInputElement>): void => {
