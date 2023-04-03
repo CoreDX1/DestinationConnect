@@ -25,14 +25,9 @@ export default component$(() => {
     const responseData = useSignal<IUserResponse>()
     const auth = useContext(AuthContext)
 
-    const onChangePasswod = $((e: QwikChangeEvent<HTMLInputElement>): void => {
-        const { value } = e.target
-        sign.password = value
-    })
-
-    const onChangeEmail = $((e: QwikChangeEvent<HTMLInputElement>): void => {
-        const { value } = e.target
-        sign.email = value
+    const onChange = $((e: QwikChangeEvent<HTMLInputElement>) => {
+        const { value, name } = e.target
+        sign[name] = value
     })
 
     const webLogin = $(async () => {
@@ -83,8 +78,9 @@ export default component$(() => {
                                 <input
                                     type="email"
                                     placeholder="user@gmail.com"
+                                    name="email"
                                     class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                    onChange$={onChangeEmail}
+                                    onChange$={onChange}
                                 />
                             </div>
                             <div>
@@ -113,7 +109,8 @@ export default component$(() => {
                                     placeholder="••••••••"
                                     autoComplete="on"
                                     class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                    onChange$={onChangePasswod}
+                                    name="password"
+                                    onChange$={onChange}
                                 />
                             </div>
                             <button class="text-black bg-blue-400 w-full p-2 rounded-lg font-bold text-[20px] hover:bg-blue-300">
