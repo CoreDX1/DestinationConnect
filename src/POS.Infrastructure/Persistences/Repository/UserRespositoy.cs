@@ -22,7 +22,7 @@ public class UserRespositoy : IUserRepositoy
     {
         User? response = await _context.Users
             .AsNoTracking()
-            .FirstOrDefaultAsync(x => x.Email == user.Email && x.Password == user.Password);
+            .FirstOrDefaultAsync(x => x.Email == user.Email);
         return response!;
     }
 
