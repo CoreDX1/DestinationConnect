@@ -86,22 +86,31 @@ public class UserApplication : IUserApplication
         var emailValidate = await _unitOfWork.Users.ValidateEmail(user);
         List<string> email = new List<string>();
         List<string> password = new List<string>();
+        List<string> firstName = new List<string>();
+        List<string> lastName = new List<string>();
+
         if (form == 1 && emailValidate == true)
-        {
             email.Add("El email ya existe");
-        }
+
         for (int i = 0; i < validate.Errors.Count(); i++)
         {
             string errorMessage = validate.Errors[i].ErrorMessage;
+
             if (validate.Errors[i].PropertyName == "Email")
-            {
                 email.Add(errorMessage);
-            }
             if (validate.Errors[i].PropertyName == "Password")
-            {
                 password.Add(errorMessage);
-            }
+            if (validate.Errors[i].PropertyName == "FirstName")
+                firstName.Add(errorMessage);
+            if (validate.Errors[i].PropertyName == "LastName")
+                lastName.Add(errorMessage);
         }
-        return new ErrorResponseDto { Email = email, Password = password };
+        return new ErrorResponseDto
+        {
+            Email = email,
+            Password = password,
+            FirstName = firstName,
+            LastName = lastName
+        };
     }
 }

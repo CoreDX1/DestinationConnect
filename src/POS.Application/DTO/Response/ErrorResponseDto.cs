@@ -6,6 +6,8 @@ public class ErrorResponseDto
 {
     public List<string>? Email { get; set; }
     public List<string>? Password { get; set; }
+    public List<string>? FirstName { get; set; }
+    public List<string>? LastName { get; set; }
 
     [JsonIgnore]
     public int ErrorCount

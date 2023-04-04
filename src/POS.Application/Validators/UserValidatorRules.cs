@@ -7,15 +7,19 @@ public class UserValidatorRules : AbstractValidator<User>
 {
     public UserValidatorRules()
     {
-        RuleFor<string>(x => x.Email)
+        RuleFor(x => x.Email)
             .EmailAddress()
             .WithMessage("Email no es valido")
+            .Length(1, 50)
+            .WithMessage("El Email debe tener entre 1 y 50 caracteres")
             .NotNull()
             .NotEmpty()
             .WithMessage("Email es requerido");
-        RuleFor<string>(x => x.Password)
+        RuleFor(x => x.Password).NotNull().NotEmpty().WithMessage("Password es requerido");
+        RuleFor(x => x.FirstName)
             .NotNull()
             .NotEmpty()
-            .WithMessage("Password es requerido");
+            .WithMessage("FirstName es requerido");
+        RuleFor(x => x.LastName).NotNull().NotEmpty().WithMessage("LastName es requerido");
     }
 }
