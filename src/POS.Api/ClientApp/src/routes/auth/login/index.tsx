@@ -1,9 +1,10 @@
 import { useContext, type QwikChangeEvent } from "@builder.io/qwik"
 import { $, component$, useStore, useSignal } from "@builder.io/qwik"
 import type { IUserResponse } from "~/Interface/Response/IUserResponse"
-import type { Login } from "~/Interface/Request/IUserRequest"
+import type { LoginData } from "~/Interface/Request/IUserRequest"
 import { User } from "~/api/UserApi"
 import { AuthContext } from "~/root"
+import { ErrorList } from "~/components/errorList"
 
 export const fakeAuthService = (credentiales: {
     email: string
@@ -18,23 +19,23 @@ export const fakeAuthService = (credentiales: {
 }
 
 export default component$(() => {
-    const sign = useStore<Login>({
+    const loginData = useStore<LoginData>({
         email: "",
         password: "",
     })
     const responseData = useSignal<IUserResponse>()
     const auth = useContext(AuthContext)
 
-    const onChange = $((e: QwikChangeEvent<HTMLInputElement>) => {
+    const handlInputChange = $((e: QwikChangeEvent<HTMLInputElement>) => {
         const { value, name } = e.target
-        sign[name] = value
+        loginData[name] = value
     })
 
-    const webLogin = $(async () => {
+    const loginAccount = $(async () => {
         const res = new User("/Auth/Login")
-        const data = await res.accountLogin(sign)
+        const data = await res.accountLogin(loginData)
         responseData.value = data
-        fakeAuthService(sign)
+        fakeAuthService(loginData)
         if (data.success) auth.isLogged.value = true
     })
 
@@ -51,7 +52,7 @@ export default component$(() => {
                         </h1>
                         <form
                             preventdefault:submit
-                            onSubmit$={webLogin}
+                            onSubmit$={loginAccount}
                             class="space-y-5 md:space-y-6"
                         >
                             <div>
@@ -61,26 +62,19 @@ export default component$(() => {
                                 >
                                     Your Email
                                 </label>
-                                {responseData.value?.success ? null : (
-                                    <div>
-                                        {responseData.value?.errors.email.map(
-                                            (item, index) => (
-                                                <p
-                                                    key={index}
-                                                    class="text-red-600"
-                                                >
-                                                    {item}
-                                                </p>
-                                            )
-                                        )}
-                                    </div>
+                                {!responseData.value?.success && (
+                                    <ErrorList
+                                        message={
+                                            responseData.value?.errors.email
+                                        }
+                                    />
                                 )}
                                 <input
                                     type="email"
                                     placeholder="user@gmail.com"
                                     name="email"
                                     class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                    onChange$={onChange}
+                                    onChange$={handlInputChange}
                                 />
                             </div>
                             <div>
@@ -90,19 +84,12 @@ export default component$(() => {
                                 >
                                     Your Password
                                 </label>
-                                {responseData.value?.success ? null : (
-                                    <div>
-                                        {responseData.value?.errors.password.map(
-                                            (item, index) => (
-                                                <p
-                                                    key={index}
-                                                    class="text-red-600"
-                                                >
-                                                    {item}
-                                                </p>
-                                            )
-                                        )}
-                                    </div>
+                                {!responseData.value?.success && (
+                                    <ErrorList
+                                        message={
+                                            responseData.value?.errors.password
+                                        }
+                                    />
                                 )}
                                 <input
                                     type="password"
@@ -110,13 +97,13 @@ export default component$(() => {
                                     autoComplete="on"
                                     class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                     name="password"
-                                    onChange$={onChange}
+                                    onChange$={handlInputChange}
                                 />
                             </div>
                             <button class="text-black bg-blue-400 w-full p-2 rounded-lg font-bold text-[20px] hover:bg-blue-300">
                                 Login
                             </button>
-                            {responseData.value?.success ? null : (
+                            {!responseData.value?.success && (
                                 <p class="text-red-600">
                                     {responseData.value?.message}
                                 </p>
