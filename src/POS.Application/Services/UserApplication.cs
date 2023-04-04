@@ -16,19 +16,26 @@ public class UserApplication : IUserApplication
     private readonly IUnitOfWork _unitOfWork;
     private readonly IMapper _mapper;
     private readonly IValidator<User> _validator;
+    private readonly IValidator<UserRequestDto> _login;
 
-    public UserApplication(IUnitOfWork unitOfWork, IMapper mapper, IValidator<User> validator)
+    public UserApplication(
+        IUnitOfWork unitOfWork,
+        IMapper mapper,
+        IValidator<User> validator,
+        IValidator<UserRequestDto> login
+    )
     {
         _unitOfWork = unitOfWork;
         _mapper = mapper;
         _validator = validator;
+        _login = login;
     }
 
     public async Task<BaseResponse<User>> Login(UserRequestDto userRequest)
     {
         var response = new BaseResponse<User>();
         User userMapper = _mapper.Map<User>(userRequest);
-        var validation = await _validator.ValidateAsync(userMapper);
+        var validation = await _login.ValidateAsync(userRequest);
         if (!validation.IsValid)
         {
             response.Success = false;
