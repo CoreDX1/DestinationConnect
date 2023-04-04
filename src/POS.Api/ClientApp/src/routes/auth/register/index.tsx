@@ -10,23 +10,24 @@ import { User } from "~/api/UserApi"
 import { type Register } from "~/Interface/Request/IUserRequest"
 
 export default component$(() => {
-    const sign = useStore<Register>({
+    const registrationData = useStore<Register>({
         lastname: "",
         firstname: "",
         email: "",
         password: "",
     })
-    const responseData = useSignal<IUserResponse>()
+    const resgistrationResponse = useSignal<IUserResponse>()
 
-    const webLogin = $(async () => {
+    const registerAccount = $(async (): Promise<IUserResponse> => {
         const res = new User("/Auth/Register")
-        const data = await res.accountRegister(sign)
-        responseData.value = data
+        const data = await res.accountRegister(registrationData)
+        resgistrationResponse.value = data
+        return data
     })
 
-    const SingIn = $((e: QwikChangeEvent<HTMLInputElement>) => {
+    const updateRegistrationData = $((e: QwikChangeEvent<HTMLInputElement>) => {
         const { value, name } = e.target
-        sign[name] = value
+        registrationData[name] = value
     })
 
     return (
@@ -35,7 +36,7 @@ export default component$(() => {
                 <div class="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
                     <div class="p-6 space-y-4 md:space-y-6 sm:p-8">
                         <div class="text-center">
-                            {responseData.value?.success ? (
+                            {resgistrationResponse.value?.success ? (
                                 <p class="p-3 text-2xl bg-emerald-300 inline-block border rounded-md">
                                     Usuario Registrado
                                 </p>
@@ -54,8 +55,8 @@ export default component$(() => {
                                     placeholder="firstname"
                                     name="firstname"
                                     class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg w-full p-2.5"
-                                    value={sign.firstname}
-                                    onChange$={SingIn}
+                                    value={registrationData.firstname}
+                                    onChange$={updateRegistrationData}
                                 />
                             </div>
                             <div>
@@ -69,21 +70,18 @@ export default component$(() => {
                                     type="text"
                                     class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                     placeholder="lastname"
-                                    value={sign.lastname}
+                                    value={registrationData.lastname}
                                     name="lastname"
-                                    onChange$={SingIn}
+                                    onChange$={updateRegistrationData}
                                 />
                             </div>
                             <div>
-                                <label
-                                    for="email"
-                                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                                >
+                                <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
                                     Your Email
                                 </label>
-                                {responseData.value?.success ? null : (
+                                {!resgistrationResponse.value?.success && (
                                     <div>
-                                        {responseData.value?.errors.email.map(
+                                        {resgistrationResponse.value?.errors.email.map(
                                             (item, index) => (
                                                 <p
                                                     key={index}
@@ -99,21 +97,18 @@ export default component$(() => {
                                     type="email"
                                     placeholder="user@gmail.com"
                                     class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                    value={sign.email}
+                                    value={registrationData.email}
                                     name="email"
-                                    onChange$={SingIn}
+                                    onChange$={updateRegistrationData}
                                 />
                             </div>
                             <div>
-                                <label
-                                    for="password"
-                                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                                >
+                                <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
                                     Your Password
                                 </label>
-                                {responseData.value?.success ? null : (
+                                {!resgistrationResponse.value?.success && (
                                     <div>
-                                        {responseData.value?.errors.password.map(
+                                        {resgistrationResponse.value?.errors.password.map(
                                             (item, index) => (
                                                 <p
                                                     key={index}
@@ -130,21 +125,21 @@ export default component$(() => {
                                     placeholder="••••••••"
                                     autoComplete="on"
                                     class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                    value={sign.password}
+                                    value={registrationData.password}
                                     name="password"
-                                    onChange$={SingIn}
+                                    onChange$={updateRegistrationData}
                                 />
                             </div>
                             <button
                                 class="text-black bg-blue-400 w-full p-2 rounded-lg font-bold text-[20px] hover:bg-blue-300"
                                 preventdefault:click
-                                onClick$={webLogin}
+                                onClick$={registerAccount}
                             >
                                 Login
                             </button>
-                            {responseData.value?.success ? null : (
+                            {!resgistrationResponse.value?.success && (
                                 <p class="text-red-600">
-                                    {responseData.value?.message}
+                                    {resgistrationResponse.value?.message}
                                 </p>
                             )}
                             <p class="text-sm font-light text-gray-500 dark:text-gray-400">
