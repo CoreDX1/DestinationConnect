@@ -8,6 +8,8 @@ export interface IUserResponse {
 interface Error {
     email: Array<string>
     password: Array<string>
+    firstName : Array<string>
+    lastName : Array<string>
 }
 
 interface Data {
