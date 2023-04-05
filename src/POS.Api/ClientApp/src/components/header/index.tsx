@@ -1,7 +1,6 @@
 import { component$, useContext } from "@builder.io/qwik"
 import { Link } from "@builder.io/qwik-city"
-import Menu from "../../api/Menu.json"
-import facebook from "/Logo/avion.png"
+import Menu from "~/api/LocalApi/Menu.json"
 import { AuthContext } from "~/root"
 
 export const Header = component$(() => {
@@ -12,7 +11,7 @@ export const Header = component$(() => {
             <div></div>
             <div class="flex justify-between">
                 <Link href="/home">
-                    <img class="w-16" src={facebook} alt="Logo" />
+                    <img class="w-16" src="/Logo/avion.png" alt="Logo" />
                 </Link>
                 <div class="flex flex-row gap-3">
                     <p>Para ventas 0810 810 9994</p>
