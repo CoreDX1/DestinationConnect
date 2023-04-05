@@ -1,9 +1,11 @@
 export interface IUserResponse {
     success: boolean
     data: Data
-    message: string
+    message: string | undefined
     errors: Error
 }
+
+export type MessageResponse = Pick<IUserResponse, 'message' > 
 
 interface Error {
     email: Array<string>
