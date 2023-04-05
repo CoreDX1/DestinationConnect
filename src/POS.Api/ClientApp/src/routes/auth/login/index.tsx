@@ -5,6 +5,7 @@ import type { LoginData } from "~/Interface/Request/IUserRequest"
 import { User } from "~/api/UserApi"
 import { AuthContext } from "~/root"
 import { ErrorList } from "~/components/errorList"
+import { SuccessMessage } from "~/components/successMessage"
 
 export const fakeAuthService = (credentiales: {
     email: string
@@ -23,6 +24,8 @@ export default component$(() => {
         email: "",
         password: "",
     })
+    const showSuccessMessage = useSignal<boolean>(false)
+
     const responseData = useSignal<IUserResponse>()
     const auth = useContext(AuthContext)
 
@@ -35,8 +38,12 @@ export default component$(() => {
         const res = new User("/Auth/Login")
         const data = await res.accountLogin(loginData)
         responseData.value = data
-        fakeAuthService(loginData)
-        if (data.success) auth.isLogged.value = true
+        showSuccessMessage.value = true
+        setTimeout(() => (showSuccessMessage.value = false), 5000)
+        if (data.success) {
+            auth.isLogged.value = true
+            fakeAuthService(loginData)
+        }
     })
 
     return (
@@ -45,12 +52,16 @@ export default component$(() => {
                 <a class="text-[40px] font-bold py-8" href="/home">
                     Login Form
                 </a>
+                {showSuccessMessage.value && (
+                    <SuccessMessage message={responseData.value?.message} />
+                )}
                 <div class="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
                     <div class="p-6 space-y-4 md:space-y-6 sm:p-8">
                         <h1 class="text-xl font-bold leading-tight tracking-tight ">
                             Please sign in
                         </h1>
                         <form
+                            method="POST"
                             preventdefault:submit
                             onSubmit$={loginAccount}
                             class="space-y-5 md:space-y-6"
