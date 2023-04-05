@@ -1,14 +1,10 @@
 import { $, component$, type QwikMouseEvent, useStore } from "@builder.io/qwik"
-interface IFormfilter {
-    casa: string
-    destino: string
-    fechaInicio: string
-    fechaFin: string
-    habitaciones: {
-        cama: number
-        personas: number
-    }
-}
+import type {
+    WithLabel,
+    IFormfilter,
+    WithIdAndLabel,
+} from "~/Interface/Response/IFormFilter"
+import menuItem from "~/api/LocalApi/MenuItem.json"
 
 export const Formfilter = component$(() => {
     const form = useStore<IFormfilter>({
@@ -22,20 +18,15 @@ export const Formfilter = component$(() => {
         },
     })
 
-    const menuItem = [
-        {
-            id: "todos",
-            label: "Todos",
-        },
-        {
-            id: "hoteles",
-            label: "Hoteles",
-        },
-        {
-            id: "alquileres",
-            label: "Alquileres Temporarios",
-        },
-    ]
+    const createItemsWithId = <T extends WithLabel>(
+        items: Array<T>
+    ): Array<WithIdAndLabel> => {
+        return items.map((item) => ({
+            id: item.label.toLowerCase().replace(/ /g, "-"),
+            label: item.label,
+        }))
+    }
+    const newMenu = createItemsWithId(menuItem)
 
     const handleSubmit = $(
         (event: QwikMouseEvent<HTMLSpanElement, MouseEvent>) => {
@@ -44,20 +35,18 @@ export const Formfilter = component$(() => {
         }
     )
 
-    // const handleSubmitInput =
-
     return (
         <div class="flex justify-center pt-10">
             <div class="bg-violet-800 w-[1000px] rounded-2xl p-8 ">
                 <div class="text-white flex flex-row gap-7 pb-6 items-center">
                     <h2 class="text-2xl font-medium">Alojamientos</h2>
-                    {menuItem.map((item, index) => (
+                    {newMenu.map((item, index) => (
                         <div key={index}>
                             <p>
                                 <span
                                     id={item.id}
                                     class="border-2 rounded-full px-4"
-                                    onClick$={(): any => handleSubmit}
+                                    onClick$={() => handleSubmit}
                                 >
                                     {item.label}
                                 </span>
