@@ -36,8 +36,8 @@ export const Formfilter = component$(() => {
     )
 
     return (
-        <div class="flex justify-center pt-10">
-            <div class="bg-violet-800 w-[1000px] rounded-2xl p-8 ">
+        <div class="flex justify-center items-center py-5 bg-violet-400">
+            <div class="bg-indigo-900 w-[60rem] rounded-md p-4">
                 <div class="text-white flex flex-row gap-7 pb-6 items-center">
                     <h2 class="text-2xl font-medium">Alojamientos</h2>
                     {newMenu.map((item, index) => (

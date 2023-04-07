@@ -1,7 +1,7 @@
 import { component$ } from "@builder.io/qwik"
 
 type ErrorProps = {
-    message: Array<string> | undefined
+    message?: Array<string>
 }
 
 export const ErrorList = component$<ErrorProps>(({ message }) => {

@@ -9,6 +9,7 @@ import type { IUserResponse } from "~/Interface/Response/IUserResponse"
 import { User } from "~/api/UserApi"
 import { type Register } from "~/Interface/Request/IUserRequest"
 import { ErrorList } from "~/components/errorList"
+import { SuccessMessage } from "~/components/successMessage"
 
 export default component$(() => {
     const registrationData = useStore<Register>({
@@ -18,11 +19,14 @@ export default component$(() => {
         password: "",
     })
     const resgistrationResponse = useSignal<IUserResponse>()
+    const showSuccessMessage = useSignal<boolean>(false)
 
     const registerAccount = $(async (): Promise<IUserResponse> => {
         const res = new User("/Auth/Register")
         const data = await res.accountRegister(registrationData)
         resgistrationResponse.value = data
+        showSuccessMessage.value = true
+        setTimeout(() => (showSuccessMessage.value = false), 5000)
         return data
     })
 
@@ -37,11 +41,16 @@ export default component$(() => {
                 <div class="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
                     <div class="p-6 space-y-4 md:space-y-6 sm:p-8">
                         <div class="text-center">
-                            {resgistrationResponse.value?.success ? (
-                                <p class="p-3 text-2xl bg-emerald-300 inline-block border rounded-md">
-                                    Usuario Registrado
-                                </p>
-                            ) : null}
+                            {showSuccessMessage.value && (
+                                <SuccessMessage
+                                    success={
+                                        resgistrationResponse.value?.success
+                                    }
+                                    message={
+                                        resgistrationResponse.value?.message
+                                    }
+                                />
+                            )}
                         </div>
                         <h1 class="text-xl font-bold leading-tight tracking-tight ">
                             Register your account
@@ -142,11 +151,6 @@ export default component$(() => {
                             >
                                 Login
                             </button>
-                            {!resgistrationResponse.value?.success && (
-                                <p class="text-red-600">
-                                    {resgistrationResponse.value?.message}
-                                </p>
-                            )}
                             <p class="text-sm font-light text-gray-500 dark:text-gray-400">
                                 Don’t have an account yet?{" "}
                                 <a

@@ -1,17 +1,15 @@
 export interface IUserResponse {
-    success: boolean
+    success?: boolean  
+    message?: string 
     data: Data
-    message: string | undefined
-    errors: Error
+    errors: Error 
 }
 
-export type MessageResponse = Pick<IUserResponse, 'message' > 
-
 interface Error {
-    email: Array<string>
-    password: Array<string>
-    firstName : Array<string>
-    lastName : Array<string>
+    email: string[]
+    password: string[]
+    firstName : string[]
+    lastName : string[]
 }
 
 interface Data {

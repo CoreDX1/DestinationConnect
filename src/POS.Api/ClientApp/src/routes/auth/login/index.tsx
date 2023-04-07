@@ -12,7 +12,6 @@ export const fakeAuthService = (credentiales: {
     password: string
 }): any => {
     console.log(credentiales)
-    console.log(`Retorna un token session (JWT Json Web Token)`)
     const JWT = "TOKEN_SESSION_123"
     const expireDate = new Date()
     expireDate.setDate(expireDate.getDate() + 1)
@@ -53,7 +52,10 @@ export default component$(() => {
                     Login Form
                 </a>
                 {showSuccessMessage.value && (
-                    <SuccessMessage message={responseData.value?.message} />
+                    <SuccessMessage
+                        success={responseData.value?.success}
+                        message={responseData.value?.message}
+                    />
                 )}
                 <div class="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
                     <div class="p-6 space-y-4 md:space-y-6 sm:p-8">
