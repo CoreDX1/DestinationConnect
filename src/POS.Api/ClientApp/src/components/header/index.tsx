@@ -12,12 +12,12 @@ export const Header = component$(() => {
                 <Link href="/home">
                     <img class="w-16" src="/Logo/avion.png" alt="Logo" />
                 </Link>
-                <div class="flex flex-row items-center">
-                    <p class="bg-[#270570] p-4 rounded-bl-3xl text-white">
+                <div class="flex flex-row h-[70px] items-center">
+                    <p class="bg-[#270570] h-full  p-6 rounded-bl-3xl text-white">
                         Para ventas 0810 810 9994
                     </p>
-                    <div class="flex flex-row items-center gap-4 bg-[#EEE] h-[54px] w-[820px] pl-4">
-                        <a>Pasaporte</a>
+                    <div class="flex flex-row items-center gap-4 bg-[#EEE] h-full w-[820px] pl-4">
+                        <a href="*">Pasaporte</a>
                         {!auth.isLogged.value && (
                             <div>
                                 <Link class="p-4" href="/auth/register">
@@ -47,7 +47,7 @@ export const Header = component$(() => {
                     </div>
                 </div>
             </div>
-            <div>
+            <div class="mt-1">
                 <nav class="grid">
                     <ul>
                         {Menu.map((item, index) => (
@@ -57,9 +57,11 @@ export const Header = component$(() => {
                                 </Link>
                             </li>
                         ))}
-                        <li class="inline-block border p-2 rounded-full align-middle hover:text-indigo-600 hover:border-indigo-600">
-                            <a href="/auth/logout">Tarjeta Despegar ICBC</a>
-                        </li>
+                        <div class="inline-block w-[200px] text-right">
+                            <li class="inline-block border p-2 w-auto rounded-full align-middle hover:text-indigo-600 hover:border-indigo-600">
+                                <a href="/auth/logout">Tarjeta Despegar ICBC</a>
+                            </li>
+                        </div>
                     </ul>
                 </nav>
             </div>
