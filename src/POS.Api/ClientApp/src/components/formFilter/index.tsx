@@ -33,7 +33,6 @@ export const Formfilter = component$(() => {
     const handleTest = $((e: QwikChangeEvent<HTMLInputElement>) => {
         const { value, name } = e.target
         form[name] = value
-        console.log(form)
     })
 
     const handleSubmit = $(
@@ -41,64 +40,68 @@ export const Formfilter = component$(() => {
             const { id } = event.target as HTMLSpanElement
             const textModicate = id.replace(/\s+/g, "-").toLowerCase()
             form["alojamiento"] = textModicate
-            console.log(form)
         }
     )
 
+    const handleForm = $(() => {
+        console.log(form)
+    })
+
     return (
         <div class="flex justify-center items-center py-5 bg-gradient-to-b from-purple-400 to-purple-500">
-            <div class="bg-[#270570] w-[60rem] rounded-md p-4">
-                <div class="text-white flex flex-row gap-7 pb-6 items-center">
-                    <h2 class="text-2xl font-medium">Alojamientos</h2>
+            <form
+                class="bg-[#270570] gap-3 w-[60rem] rounded-md p-4 grid grid-cols-4 grid-rows-[50px,60px]"
+                method="POST"
+                preventdefault:submit
+                onSubmit$={handleForm}
+            >
+                <h2 class="text-3xl text-white font-medium">Alojamientos</h2>
+                <div class="col-span-3 p-2 align-bottom text-white">
                     {newMenu.map((item, index) => (
-                        <div key={index}>
-                            <span
-                                class="border-2 rounded-full px-4"
-                                id={item.label}
-                                onClick$={handleSubmit}
-                            >
-                                {item.label}
-                            </span>
-                        </div>
+                        <span
+                            key={index}
+                            class="border-2 rounded-full mx-2 px-4"
+                            id={item.label}
+                            onClick$={handleSubmit}
+                        >
+                            {item.label}
+                        </span>
                     ))}
                 </div>
-                <form
-                    class="text-gray-500 grid grid-cols-4 gap-3"
-                    preventdefault:submit
-                >
-                    <div class="bg-white p-2">
-                        <label class="block text-sm">Destino</label>
-                        <input
-                            type="text"
-                            name="destino"
-                            class="w-[50px]"
-                            placeholder="ingresa Ubicacion"
-                            onChange$={handleTest}
-                        />
-                    </div>
-                    <div class="bg-white p-2">
-                        <label class="block">Fecha de inicio</label>
-                        <input
-                            type="date"
-                            name="fechaInicio"
-                            placeholder="ingresa una fecha"
-                            onChange$={handleTest}
-                        />
-                    </div>
-                    <div class="bg-white p-2">
-                        <label class="block">Fecha de fin</label>
-                        <input
-                            type="date"
-                            name="fechaFin"
-                            placeholder="ingresa una fecha"
-                            onChange$={handleTest}
-                        />
-                    </div>
-                    <button class="bg-orange-500 w-[120px] text-white">
+                <div class="bg-white pl-5 pt-2">
+                    <label class="block text-sm">Destino</label>
+                    <input
+                        type="text"
+                        name="destino"
+                        class="w-full"
+                        placeholder="ingresa Ubicacion"
+                        onChange$={handleTest}
+                    />
+                </div>
+                <div class="bg-white">
+                    <label class="block">Fecha de inicio</label>
+                    <input
+                        type="date"
+                        name="fechaInicio"
+                        placeholder="ingresa una fecha"
+                        onChange$={handleTest}
+                    />
+                </div>
+                <div class="bg-white">
+                    <label class="block">Fecha de fin</label>
+                    <input
+                        type="date"
+                        name="fechaFin"
+                        placeholder="ingresa una fecha"
+                        onChange$={handleTest}
+                    />
+                </div>
+                <div class=" text-right">
+                    <button class=" bg-[#fa503f] w-2/4 h-full text-white rounded-full">
                         Enviar
                     </button>
-                </form>
-            </div>
+                </div>
+            </form>
         </div>
     )
 })
