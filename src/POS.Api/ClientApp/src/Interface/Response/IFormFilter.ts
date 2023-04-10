@@ -1,12 +1,9 @@
 export interface IFormfilter {
-    casa: string
+    alojamiento: string
     destino: string
     fechaInicio: string
     fechaFin: string
-    habitaciones: {
-        cama: number
-        personas: number
-    }
+    [key: string] : string
 }
 
 export interface WithLabel {
