@@ -63,7 +63,7 @@ export const Formfilter = component$(() => {
                     ))}
                 </div>
                 <form
-                    class="text-gray-500 flex flex-row gap-3"
+                    class="text-gray-500 grid grid-cols-4 gap-3"
                     preventdefault:submit
                 >
                     <div class="bg-white p-2">
@@ -71,29 +71,28 @@ export const Formfilter = component$(() => {
                         <input
                             type="text"
                             name="destino"
-                            placeholder="ingresa una cuidad , alojamiento o punto de"
+                            class="w-[50px]"
+                            placeholder="ingresa Ubicacion"
                             onChange$={handleTest}
                         />
                     </div>
-                    <div class="flex flex-row ">
-                        <div class="bg-white p-2">
-                            <label class="block">Fecha de inicio</label>
-                            <input
-                                type="date"
-                                name="fechaInicio"
-                                placeholder="ingresa una fecha"
-                                onChange$={handleTest}
-                            />
-                        </div>
-                        <div class="bg-white p-2">
-                            <label class="block">Fecha de fin</label>
-                            <input
-                                type="date"
-                                name="fechaFin"
-                                placeholder="ingresa una fecha"
-                                onChange$={handleTest}
-                            />
-                        </div>
+                    <div class="bg-white p-2">
+                        <label class="block">Fecha de inicio</label>
+                        <input
+                            type="date"
+                            name="fechaInicio"
+                            placeholder="ingresa una fecha"
+                            onChange$={handleTest}
+                        />
+                    </div>
+                    <div class="bg-white p-2">
+                        <label class="block">Fecha de fin</label>
+                        <input
+                            type="date"
+                            name="fechaFin"
+                            placeholder="ingresa una fecha"
+                            onChange$={handleTest}
+                        />
                     </div>
                     <button class="bg-orange-500 w-[120px] text-white">
                         Enviar
