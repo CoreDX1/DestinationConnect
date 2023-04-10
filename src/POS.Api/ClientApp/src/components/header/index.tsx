@@ -47,7 +47,7 @@ export const Header = component$(() => {
                     </div>
                 </div>
             </div>
-            <div class="mt-1">
+            <div class="mb-2 mt-2">
                 <nav class="grid">
                     <ul>
                         {Menu.map((item, index) => (
