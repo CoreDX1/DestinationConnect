@@ -29,13 +29,8 @@ export default component$(() => {
     })
 
     useVisibleTask$(() => {
-        const value = `; ${document.cookie}`
-        const parts = value.split(`; ${"myToken"}=`)
-        if (parts.length === 2) {
-            loginState.value = true
-        } else {
-            loginState.value = false
-        }
+        const value = window.localStorage.getItem("myToken")
+        value ? (loginState.value = true) : (loginState.value = false)
     })
 
     useContextProvider(AuthContext, authStore)
