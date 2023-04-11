@@ -35,7 +35,7 @@ public class UserApplication : IUserApplication
     {
         BaseResponse<User> response = new();
         User user = _mapper.Map<User>(userRequest);
-        var validationResponse = await IsValidateLogin(user, "Login");
+        ErrorResponseDto validationResponse = await IsValidateLogin(user, "Login");
         if (validationResponse.ErrorCount > 0)
         {
             response.Success = false;
