@@ -35,12 +35,12 @@ public class UserApplication : IUserApplication
     {
         var response = new BaseResponse<User>();
         User userMapper = _mapper.Map<User>(userRequest);
-        var validation = await _login.ValidateAsync(userRequest);
-        if (!validation.IsValid)
+        var validation = await IsValidateLogin(userMapper, "Login");
+        if (validation.ErrorCount > 0)
         {
             response.Success = false;
             response.Message = ReplyMessage.MESSAGE_VALIDATE;
-            response.Errors = await IsValidateLogin(userMapper, 0);
+            response.Errors = validation;
             return response;
         }
         User account = await _unitOfWork.Users.GetUser(userMapper);
@@ -64,7 +64,7 @@ public class UserApplication : IUserApplication
     public async Task<BaseResponse<bool>> Register(User user)
     {
         var response = new BaseResponse<bool>();
-        var validation = await IsValidateLogin(user, 1);
+        var validation = await IsValidateLogin(user, "Register");
         if (validation.ErrorCount > 0)
         {
             response.Success = false;
@@ -87,37 +87,29 @@ public class UserApplication : IUserApplication
         return response;
     }
 
-    public async Task<ErrorResponseDto> IsValidateLogin(User user, int form)
+    public async Task<ErrorResponseDto> IsValidateLogin(User user, string form)
     {
-        var validate = await _validator.ValidateAsync(user);
-        var emailValidate = await _unitOfWork.Users.ValidateEmail(user);
-        List<string> email = new List<string>();
-        List<string> password = new List<string>();
-        List<string> firstName = new List<string>();
-        List<string> lastName = new List<string>();
-
-        if (form == 1 && emailValidate == true)
-            email.Add("El email ya existe");
-
-        for (int i = 0; i < validate.Errors.Count(); i++)
+        var isEmailValid = await _unitOfWork.Users.ValidateEmail(user);
+        var errorResponse = new ErrorResponseDto
         {
-            string errorMessage = validate.Errors[i].ErrorMessage;
-
-            if (validate.Errors[i].PropertyName == "Email")
-                email.Add(errorMessage);
-            if (validate.Errors[i].PropertyName == "Password")
-                password.Add(errorMessage);
-            if (validate.Errors[i].PropertyName == "FirstName")
-                firstName.Add(errorMessage);
-            if (validate.Errors[i].PropertyName == "LastName")
-                lastName.Add(errorMessage);
-        }
-        return new ErrorResponseDto
-        {
-            Email = email,
-            Password = password,
-            FirstName = firstName,
-            LastName = lastName
+            Email = new List<string>(),
+            FirstName = new List<string>(),
+            LastName = new List<string>(),
+            Password = new List<string>(),
         };
+
+        // * When the user needs to register
+        if (form == "Register" && isEmailValid == true)
+            errorResponse.Email.Add("El email ya existe");
+
+        var validateResult = await _validator.ValidateAsync(user);
+        foreach (var error in validateResult.Errors)
+        {
+            List<string>? errorMessageList =
+                errorResponse.GetType().GetProperty(error.PropertyName)?.GetValue(errorResponse)
+                as List<string>;
+            errorMessageList?.Add(error.ErrorMessage);
+        }
+        return errorResponse;
     }
 }
