@@ -7,5 +7,5 @@ namespace POS.Application.Interface;
 public interface IUserApplication
 {
     Task<BaseResponse<bool>> Register(User user);
-    Task<BaseResponse<User>> Login(UserRequestDto user);
+    Task<BaseResponse<string>> Login(UserRequestDto user);
 }

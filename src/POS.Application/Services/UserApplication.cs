@@ -1,5 +1,10 @@
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
+using System.Text;
 using AutoMapper;
 using FluentValidation;
+using Microsoft.Extensions.Configuration;
+using Microsoft.IdentityModel.Tokens;
 using POS.Application.Commons.Base;
 using POS.Application.DTO.Request;
 using POS.Application.DTO.Response;
@@ -17,23 +22,26 @@ public class UserApplication : IUserApplication
     private readonly IMapper _mapper;
     private readonly IValidator<User> _validator;
     private readonly IValidator<UserRequestDto> _login;
+    private readonly IConfiguration _config;
 
     public UserApplication(
         IUnitOfWork unitOfWork,
         IMapper mapper,
         IValidator<User> validator,
-        IValidator<UserRequestDto> login
+        IValidator<UserRequestDto> login,
+        IConfiguration config
     )
     {
         _unitOfWork = unitOfWork;
         _mapper = mapper;
         _validator = validator;
         _login = login;
+        _config = config;
     }
 
-    public async Task<BaseResponse<User>> Login(UserRequestDto userRequest)
+    public async Task<BaseResponse<string>> Login(UserRequestDto userRequest)
     {
-        BaseResponse<User> response = new();
+        BaseResponse<string> response = new();
         User user = _mapper.Map<User>(userRequest);
         ErrorResponseDto validationResponse = await IsValidateLogin(user, "Login");
         if (validationResponse.ErrorCount > 0)
@@ -48,7 +56,7 @@ public class UserApplication : IUserApplication
         if (account is not null && BC.Verify(userRequest.Password, account.Password))
         {
             response.Success = true;
-            response.Data = account;
+            response.Data = GenerateToke(account);
             response.Message = ReplyMessage.MESSAGE_QUERY;
         }
         else
@@ -76,6 +84,44 @@ public class UserApplication : IUserApplication
         response.Success = account;
         response.Message = account ? ReplyMessage.MESSAGE_SAVE : ReplyMessage.MESSAGE_QUERY_EMTY;
         return response;
+    }
+
+    //* Generate the toke with user information//
+    public string GenerateToke(User user)
+    {
+        //* Creating the header //
+        var security = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Jwt:Key"]!));
+        var credentials = new SigningCredentials(security, SecurityAlgorithms.HmacSha256);
+        var header = new JwtHeader(credentials);
+
+        // * Creating the Claims //
+        var claims = new List<Claim>
+        {
+            new Claim(JwtRegisteredClaimNames.NameId, user.Id.ToString()),
+            new Claim(JwtRegisteredClaimNames.Email, user.Email),
+            new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
+            new Claim(JwtRegisteredClaimNames.Iat, DateTime.UtcNow.ToString()),
+            new Claim(JwtRegisteredClaimNames.Name, user.FirstName),
+            new Claim(JwtRegisteredClaimNames.FamilyName, user.LastName),
+            new Claim(
+                JwtRegisteredClaimNames.Jti,
+                Guid.NewGuid().ToString(),
+                ClaimValueTypes.Integer64
+            ),
+        };
+
+        //* Creating the playload //
+        var playload = new JwtPayload(
+            issuer: _config["Jwt:Issuer"],
+            audience: _config["Jwt:Audience"],
+            claims: claims,
+            notBefore: DateTime.UtcNow,
+            expires: DateTime.UtcNow.AddHours(int.Parse(_config["Jwt:Expiration"]!))
+        );
+
+        //* Creating the token //
+        var token = new JwtSecurityToken(header, playload);
+        return new JwtSecurityTokenHandler().WriteToken(token);
     }
 
     public async Task<ErrorResponseDto> IsValidateLogin(User user, string form)
