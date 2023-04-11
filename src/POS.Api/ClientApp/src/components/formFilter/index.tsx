@@ -10,7 +10,7 @@ import type {
     IFormfilter,
     WithIdAndLabel,
 } from "~/Interface/Response/IFormFilter"
-import menuItem from "~/api/LocalApi/MenuItem.json"
+import menuItem from "~/service/LocalApi/MenuItem.json"
 
 export const Formfilter = component$(() => {
     const form = useStore<IFormfilter>({
