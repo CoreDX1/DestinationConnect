@@ -33,7 +33,7 @@ public class UserApplication : IUserApplication
 
     public async Task<BaseResponse<User>> Login(UserRequestDto userRequest)
     {
-        var response = new BaseResponse<User>();
+        BaseResponse<User> response = new();
         User user = _mapper.Map<User>(userRequest);
         var validationResponse = await IsValidateLogin(user, "Login");
         if (validationResponse.ErrorCount > 0)
@@ -54,7 +54,7 @@ public class UserApplication : IUserApplication
         else
         {
             response.Success = false;
-            response.Message = ReplyMessage.MESSAGE_QUERY_EMTY;
+            response.Message = ReplyMessage.MESSAGE_VALIDATE;
         }
         return response;
     }
@@ -71,17 +71,10 @@ public class UserApplication : IUserApplication
             return response;
         }
         user.Password = BC.HashPassword(user.Password);
-        var account = await _unitOfWork.Users.AddUser(user);
-        if (!account)
-        {
-            response.Success = false;
-            response.Message = ReplyMessage.MESSAGE_FAILED;
-        }
-        else
-        {
-            response.Success = true;
-            response.Message = ReplyMessage.MESSAGE_SAVE;
-        }
+        bool account = await _unitOfWork.Users.AddUser(user);
+
+        response.Success = account;
+        response.Message = account ? ReplyMessage.MESSAGE_SAVE : ReplyMessage.MESSAGE_QUERY_EMTY;
         return response;
     }
 
