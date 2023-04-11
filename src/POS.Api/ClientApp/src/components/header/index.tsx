@@ -1,10 +1,16 @@
-import { component$, useContext } from "@builder.io/qwik"
+import { $, component$, useContext } from "@builder.io/qwik"
 import { Link } from "@builder.io/qwik-city"
-import Menu from "~/api/LocalApi/Menu.json"
+import Menu from "~/service/LocalApi/Menu.json"
 import { AuthContext } from "~/root"
 
 export const Header = component$(() => {
     const auth = useContext(AuthContext)
+    const handelLogout = $(() => {
+        if (auth.isLogged.value) {
+            auth.isLogged.value = false
+            window.localStorage.removeItem("myToken")
+        }
+    })
 
     return (
         <header class="pl-[290px] text-[15px]">
@@ -31,18 +37,16 @@ export const Header = component$(() => {
                         <Link href="/auth/mis-viajes">Mis Viajes</Link>
                         <Link href="/auth/ayuda">Ayuda</Link>
                         <li>
-                            <a
-                                class={{
-                                    "bg-red-500 rounded-full p-2":
-                                        !auth.isLogged.value,
-                                    "bg-green-400 rounded-full p-2":
-                                        auth.isLogged.value,
-                                }}
-                            >
-                                {auth.isLogged.value
-                                    ? "Usuario logado"
-                                    : "Usuario no logado"}
-                            </a>
+                            {auth.isLogged.value ? (
+                                <button
+                                    class="border border-green-500 px-2 rounded-xl hover:bg-gray-400"
+                                    onClick$={handelLogout}
+                                >
+                                    Logout
+                                </button>
+                            ) : (
+                                ""
+                            )}
                         </li>
                     </div>
                 </div>
