@@ -1,0 +1,39 @@
+import { type IUserResponse } from "../Interface/Response/IUserResponse"
+import type { LoginData, Register } from "~/Interface/Request/IUserRequest"
+import axios from "axios"
+
+class Base {
+    protected root: string = "http://localhost:5278/api/User"
+    constructor(url: string) {
+        this.root += url
+    }
+}
+
+export class User extends Base {
+    constructor(url: string) {
+        super(url)
+    }
+
+    public accountLogin = async (user: LoginData): Promise<IUserResponse> => {
+        const { data } = await axios<IUserResponse>({
+            method: "POST",
+            url: this.root,
+            data: user,
+        })
+        return data
+    }
+
+    public accountRegister = async (user: Register): Promise<IUserResponse> => {
+        const { data } = await axios<IUserResponse>({
+            method: "POST",
+            url: this.root,
+            data: user,
+        })
+        console.log(data.data)
+        return data
+    }
+}
+
+export const UserApi = {
+    loginUser : new User("/Auth/Login"),
+}
