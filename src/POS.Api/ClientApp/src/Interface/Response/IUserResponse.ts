@@ -1,7 +1,7 @@
 export interface IUserResponse {
     success?: boolean  
     message?: string 
-    data: Data
+    data: string
     errors: Error 
 }
 
@@ -10,12 +10,4 @@ interface Error {
     password: string[]
     firstName : string[]
     lastName : string[]
-}
-
-interface Data {
-    id: number
-    firstName: string
-    lastName: string
-    email: string
-    password: string
 }
