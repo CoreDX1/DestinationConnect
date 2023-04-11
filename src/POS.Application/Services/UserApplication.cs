@@ -34,24 +34,22 @@ public class UserApplication : IUserApplication
     public async Task<BaseResponse<User>> Login(UserRequestDto userRequest)
     {
         var response = new BaseResponse<User>();
-        User userMapper = _mapper.Map<User>(userRequest);
-        var validation = await IsValidateLogin(userMapper, "Login");
-        if (validation.ErrorCount > 0)
+        User user = _mapper.Map<User>(userRequest);
+        var validationResponse = await IsValidateLogin(user, "Login");
+        if (validationResponse.ErrorCount > 0)
         {
             response.Success = false;
             response.Message = ReplyMessage.MESSAGE_VALIDATE;
-            response.Errors = validation;
+            response.Errors = validationResponse;
             return response;
         }
-        User account = await _unitOfWork.Users.GetUser(userMapper);
-        if (account is not null)
+        User account = await _unitOfWork.Users.GetUser(user);
+
+        if (account is not null && BC.Verify(userRequest.Password, account.Password))
         {
-            if (BC.Verify(userRequest.Password, account.Password))
-            {
-                response.Success = true;
-                response.Data = account;
-                response.Message = ReplyMessage.MESSAGE_QUERY;
-            }
+            response.Success = true;
+            response.Data = account;
+            response.Message = ReplyMessage.MESSAGE_QUERY;
         }
         else
         {
