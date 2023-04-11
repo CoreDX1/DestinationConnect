@@ -1,12 +1,27 @@
-import { component$ } from "@builder.io/qwik"
-import { type RequestEventCommon } from "@builder.io/qwik-city"
+import { component$, useContext, useVisibleTask$ } from "@builder.io/qwik"
+import { useNavigate } from "@builder.io/qwik-city"
+import { AuthContext } from "~/root"
 
-export const onGet = ({ redirect, cookie }: RequestEventCommon) => {
-    const currentToke = cookie.get("myToken")?.value
-    if (currentToke !== "TOKEN_SESSION_123") {
-        throw redirect(302, "/auth/login")
-    }
-}
+// type SessionData = {
+//     IsSession : boolean
+//     user : any
+//     role : string
+// }
+
+// export const onGet: RequestHandler<SessionData> = ({ cookie }) => {
+//     console.log(cookie)
+//     return {
+//         IsSession: true,
+//         user: {},
+//         role : ""
+//     }
+// }
+
 export default component$(() => {
+    const auth = useContext(AuthContext)
+    const navigate = useNavigate()
+    useVisibleTask$(() => {
+        !auth.isLogged.value && navigate("/auth/login")
+    })
     return <div>Bienvenido a la </div>
 })

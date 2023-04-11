@@ -6,7 +6,7 @@ import {
     type QwikChangeEvent,
 } from "@builder.io/qwik"
 import type { IUserResponse } from "~/Interface/Response/IUserResponse"
-import { User } from "~/api/UserApi"
+import { User } from "~/service/UserApi"
 import { type Register } from "~/Interface/Request/IUserRequest"
 import { ErrorList } from "~/components/errorList"
 import { SuccessMessage } from "~/components/successMessage"
