@@ -8,6 +8,7 @@ var builder = WebApplication.CreateBuilder(args);
 var Configuration = builder.Configuration;
 builder.Services.AddInjectionInfrastructure(Configuration);
 builder.Services.AddInjectionApplication(Configuration);
+builder.Services.addAuthenticationApplication(Configuration);
 
 builder.Services.AddControllers();
 builder.Services.AddCors(options =>
@@ -35,6 +36,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+app.UseAuthentication();
 app.UseAuthorization();
 app.UseCors("MyAllowedOrigins");
 
