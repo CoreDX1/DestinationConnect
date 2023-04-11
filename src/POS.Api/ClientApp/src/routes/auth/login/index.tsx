@@ -2,28 +2,25 @@ import { useContext, type QwikChangeEvent } from "@builder.io/qwik"
 import { $, component$, useStore, useSignal } from "@builder.io/qwik"
 import type { IUserResponse } from "~/Interface/Response/IUserResponse"
 import type { LoginData } from "~/Interface/Request/IUserRequest"
-import { User } from "~/api/UserApi"
+import { UserApi } from "~/service/UserApi"
 import { AuthContext } from "~/root"
 import { ErrorList } from "~/components/errorList"
 import { SuccessMessage } from "~/components/successMessage"
+import { useNavigate } from "@builder.io/qwik-city"
 
-export const fakeAuthService = (credentiales: {
-    email: string
-    password: string
-}): any => {
-    console.log(credentiales)
-    const JWT = "TOKEN_SESSION_123"
-    const expireDate = new Date()
-    expireDate.setDate(expireDate.getDate() + 1)
-    document.cookie = `myToken=${JWT};Secure; SameSite; path=/; expires=${expireDate.toUTCString()}`
-}
+// export const fakeAuthService = () => {
+//     const JWT = "TOKEN_SESSION_123"
+//     const expireDate = new Date()
+//     expireDate.setDate(expireDate.getDate() + 1)
+//     document.cookie = `myToken=${JWT};Secure; SameSite; path=/; expires=${expireDate.toUTCString()}`
+// }
 
 export default component$(() => {
     const loginData = useStore<LoginData>({
         email: "",
         password: "",
     })
-    const showSuccessMessage = useSignal<boolean>(false)
+    const showSuccessMessage = useSignal<boolean>(true)
 
     const responseData = useSignal<IUserResponse>()
     const auth = useContext(AuthContext)
@@ -32,16 +29,16 @@ export default component$(() => {
         const { value, name } = e.target
         loginData[name] = value
     })
+    const navigate = useNavigate()
 
     const loginAccount = $(async () => {
-        const res = new User("/Auth/Login")
-        const data = await res.accountLogin(loginData)
+        const data = await UserApi.loginUser.accountLogin(loginData)
         responseData.value = data
-        showSuccessMessage.value = true
         setTimeout(() => (showSuccessMessage.value = false), 5000)
         if (data.success) {
             auth.isLogged.value = true
-            fakeAuthService(loginData)
+            window.localStorage.setItem("myToken", JSON.stringify(data))
+            navigate("/user")
         }
     })
 
