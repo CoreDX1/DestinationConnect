@@ -9,8 +9,7 @@ public partial class DestinationConnectContext : DbContext
     public DestinationConnectContext(DbContextOptions<DestinationConnectContext> options)
         : base(options) { }
 
-    public virtual DbSet<Category> Categories { get; set; }
-
+    public virtual DbSet<Lodging> Lodgings { get; set; }
     public virtual DbSet<User> Users { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
