@@ -19,6 +19,7 @@ public static class InjectionExtensions
     {
         services.AddSingleton(configuration);
         services.AddScoped<IUserApplication, UserApplication>();
+        services.AddScoped<ILodgingApplication, LodgingApplication>();
         services.AddScoped<IValidator<User>, UserValidatorRules>();
         services.AddScoped<IValidator<UserRequestDto>, UserLoginValidator>();
         services.AddAutoMapper(Assembly.GetExecutingAssembly());

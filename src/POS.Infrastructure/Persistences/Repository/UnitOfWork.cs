@@ -6,12 +6,16 @@ namespace POS.Infrastructure.Persistences.Repository;
 public class UnitOfWork : IUnitOfWork
 {
     public IUserRepositoy Users { get; private set; }
+
+    public ILodgingRepository Lodgings { get; private set; }
+
     private readonly DestinationConnectContext _context;
 
     public UnitOfWork(DestinationConnectContext context)
     {
         _context = context;
         Users = new UserRespositoy(context);
+        Lodgings = new LodgingRepository(context);
     }
 
     public void Dispose()
