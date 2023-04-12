@@ -8,13 +8,6 @@ import { ErrorList } from "~/components/errorList"
 import { SuccessMessage } from "~/components/successMessage"
 import { useNavigate } from "@builder.io/qwik-city"
 
-// export const fakeAuthService = () => {
-//     const JWT = "TOKEN_SESSION_123"
-//     const expireDate = new Date()
-//     expireDate.setDate(expireDate.getDate() + 1)
-//     document.cookie = `myToken=${JWT};Secure; SameSite; path=/; expires=${expireDate.toUTCString()}`
-// }
-
 export default component$(() => {
     const loginData = useStore<LoginData>({
         email: "",
