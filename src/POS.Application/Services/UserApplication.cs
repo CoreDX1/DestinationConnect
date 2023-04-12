@@ -52,7 +52,7 @@ public class UserApplication : IUserApplication
             return response;
         }
         User account = await _unitOfWork.Users.GetUser(user);
-
+        // TODO : Validate the user //
         if (account is not null && BC.Verify(userRequest.Password, account.Password))
         {
             response.Success = true;
@@ -70,6 +70,7 @@ public class UserApplication : IUserApplication
     public async Task<BaseResponse<bool>> Register(User user)
     {
         var response = new BaseResponse<bool>();
+        //*TODO: Validate the user //
         var validation = await IsValidateLogin(user, "Register");
         if (validation.ErrorCount > 0)
         {
@@ -78,23 +79,27 @@ public class UserApplication : IUserApplication
             response.Errors = validation;
             return response;
         }
+        // TODO: Hash user password //
         user.Password = BC.HashPassword(user.Password);
+
+        // TODO: Add user to database //
         bool account = await _unitOfWork.Users.AddUser(user);
 
+        // TODO: Generate the toke with user information //
         response.Success = account;
         response.Message = account ? ReplyMessage.MESSAGE_SAVE : ReplyMessage.MESSAGE_QUERY_EMTY;
         return response;
     }
 
-    //* Generate the toke with user information//
+    // TODO: Generate the toke with user information //
     public string GenerateToke(User user)
     {
-        //* Creating the header //
+        // TODO: Creating the header //
         var security = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Jwt:Key"]!));
         var credentials = new SigningCredentials(security, SecurityAlgorithms.HmacSha256);
         var header = new JwtHeader(credentials);
 
-        // * Creating the Claims //
+        // TODO: Creating the Claims //
         var claims = new List<Claim>
         {
             new Claim(JwtRegisteredClaimNames.NameId, user.Id.ToString()),
@@ -110,7 +115,7 @@ public class UserApplication : IUserApplication
             ),
         };
 
-        //* Creating the playload //
+        // TODO: Creating the playload //
         var playload = new JwtPayload(
             issuer: _config["Jwt:Issuer"],
             audience: _config["Jwt:Audience"],
@@ -119,7 +124,7 @@ public class UserApplication : IUserApplication
             expires: DateTime.UtcNow.AddHours(int.Parse(_config["Jwt:Expiration"]!))
         );
 
-        //* Creating the token //
+        // TODO: Creating the token //
         var token = new JwtSecurityToken(header, playload);
         return new JwtSecurityTokenHandler().WriteToken(token);
     }
@@ -135,11 +140,13 @@ public class UserApplication : IUserApplication
             Password = new List<string>(),
         };
 
-        // * When the user needs to register
-        if (form == "Register" && isEmailValid == true)
+        // TODO: When the user needs to register
+        if (form.Equals("Register") && isEmailValid)
             errorResponse.Email.Add("El email ya existe");
 
         var validateResult = await _validator.ValidateAsync(user);
+
+        // TODO: When the user needs to login
         foreach (var error in validateResult.Errors)
         {
             List<string>? errorMessageList =
