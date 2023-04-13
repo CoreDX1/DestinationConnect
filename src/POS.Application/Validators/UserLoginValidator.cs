@@ -1,6 +1,5 @@
 using FluentValidation;
-using POS.Application.DTO.Request;
-using POS.Domain.Entities;
+using POS.Application.DTO.Request.User;
 
 namespace POS.Application.Validators;
 
