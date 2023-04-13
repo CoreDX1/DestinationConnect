@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using POS.Application.Interface;
+using POS.Infrastructure.Commons.Base.Request;
 
 namespace src.POS.Api.Controllers
 {
@@ -15,7 +16,7 @@ namespace src.POS.Api.Controllers
         }
 
         [HttpGet]
-        [Route("GetLodgings")]
+        [Route("Select")]
         public async Task<IActionResult> GetLodgings()
         {
             var response = await _app.GetLodgings();
