@@ -15,6 +15,13 @@ namespace src.POS.Api.Controllers
             _app = app;
         }
 
+        [HttpPost]
+        public async Task<IActionResult> ListCategories([FromBody] BaseFiltersRequest filters)
+        {
+            var response = await _app.ListLodgings(filters);
+            return Ok(response);
+        }
+
         [HttpGet]
         [Route("Select")]
         public async Task<IActionResult> GetLodgings()
