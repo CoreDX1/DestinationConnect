@@ -14,8 +14,8 @@ public class UnitOfWork : IUnitOfWork
     public UnitOfWork(DestinationConnectContext context)
     {
         _context = context;
-        Users = new UserRespositoy(context);
-        Lodgings = new LodgingRepository(context);
+        Users = new UserRespositoy(_context);
+        Lodgings = new LodgingRepository(_context);
     }
 
     public void Dispose()
