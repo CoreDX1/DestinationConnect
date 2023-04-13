@@ -1,5 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
-using POS.Application.DTO.Request;
+using POS.Application.DTO.Request.User;
 using POS.Application.Interface;
 using POS.Domain.Entities;
 
