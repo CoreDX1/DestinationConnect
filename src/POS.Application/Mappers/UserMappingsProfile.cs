@@ -1,5 +1,5 @@
 using AutoMapper;
-using POS.Application.DTO.Request;
+using POS.Application.DTO.Request.User;
 using POS.Domain.Entities;
 
 namespace POS.Application.Mappers;

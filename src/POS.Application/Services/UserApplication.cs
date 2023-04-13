@@ -6,7 +6,7 @@ using FluentValidation;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using POS.Application.Commons.Base;
-using POS.Application.DTO.Request;
+using POS.Application.DTO.Request.User;
 using POS.Application.DTO.Response;
 using POS.Application.Interface;
 using POS.Domain.Entities;
