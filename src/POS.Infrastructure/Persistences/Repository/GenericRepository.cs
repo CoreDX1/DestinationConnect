@@ -8,6 +8,7 @@ namespace POS.Infrastructure.Persistences.Repository;
 public class GenericRepository<T> : IGenericRepository<T>
     where T : class
 {
+    // TODO : Method of pagination //
     protected IQueryable<TDTO> Ordering<TDTO>(
         BasePaginationRequest request,
         IQueryable<TDTO> queryable,
@@ -19,8 +20,10 @@ public class GenericRepository<T> : IGenericRepository<T>
             request.Order == "desc"
                 ? queryable.OrderBy($"{request.Sort} descending")
                 : queryable.OrderBy($"{request.Sort} ascending");
+
         if (pagination)
             queryDto = queryDto.Paginate(request);
+
         return queryDto;
     }
 }
