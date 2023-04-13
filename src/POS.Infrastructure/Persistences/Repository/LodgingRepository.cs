@@ -1,3 +1,4 @@
+using System.Linq.Expressions;
 using Microsoft.EntityFrameworkCore;
 using POS.Domain.Entities;
 using POS.Infrastructure.Commons.Base.Request;
@@ -20,6 +21,8 @@ public class LodgingRepository : GenericRepository<Lodging>, ILodgingRepository
     public async Task<BaseEntityResponse<Lodging>> ListLodging(BaseFiltersRequest filter)
     {
         var response = new BaseEntityResponse<Lodging>();
+
+        // TODO: Requesting all the data in the table
         IQueryable<Lodging> lodgins = (
             from c in _context.Lodgings
             where c.State.Equals(filter.StateFilter)
@@ -27,38 +30,32 @@ public class LodgingRepository : GenericRepository<Lodging>, ILodgingRepository
         )
             .AsNoTracking()
             .AsQueryable();
-        if (filter.NumFilters is not null && !string.IsNullOrEmpty(filter.TextFilter))
+
+        // TODO: Filters //
+        if (filter.NumFilters != null && !string.IsNullOrEmpty(filter.TextFilter))
         {
-            switch (filter.NumFilters)
+            Expression<Func<Lodging, bool>> predicate = filter.NumFilters switch
             {
-                case 1:
-                    lodgins = lodgins.Where(x => x.Locality!.Contains(filter.TextFilter));
-                    break;
-                case 2:
-                    lodgins = lodgins.Where(x => x.Description!.Contains(filter.TextFilter));
-                    break;
-                case 3:
-                    lodgins = lodgins.Where(x => x.LodgingType!.Contains(filter.TextFilter));
-                    break;
-            }
+                1 => x => x.Locality!.Contains(filter.TextFilter),
+                2 => x => x.Description!.Contains(filter.TextFilter),
+                3 => x => x.LodgingType!.Contains(filter.TextFilter),
+                _ => x => true
+            };
+            lodgins = lodgins.Where(predicate);
         }
 
         if (filter.StateFilter is not null)
-        {
-            lodgins = lodgins.Where(x => x.State.Equals(filter.StateFilter));
-        }
+            lodgins = lodgins.Where(x => x.State.Equals(filter.StateFilter)).AsNoTracking();
+
         if (!string.IsNullOrEmpty(filter.StartData) && !string.IsNullOrEmpty(filter.EndData))
         {
-            lodgins = lodgins.Where(
-                x =>
-                    x.DateStart >= Convert.ToDateTime(filter.StartData)
-                    && x.DateEnd <= Convert.ToDateTime(filter.EndData).AddDays(1)
-            );
+            DateTime startDate = Convert.ToDateTime(filter.StartData);
+            DateTime endDate = Convert.ToDateTime(filter.EndData).AddDays(1);
+            lodgins = lodgins.Where(x => x.DateStart >= startDate && x.DateEnd <= endDate);
         }
-        if (filter.Sort is null)
-        {
-            filter.Sort = "Id";
-        }
+
+        filter.Sort ??= "Id";
+
         response.TotalRecords = await lodgins.CountAsync();
         response.Items = await Ordering(filter, lodgins, true).ToListAsync();
         return response;
