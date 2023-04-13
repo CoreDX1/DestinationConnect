@@ -7,6 +7,7 @@ public class UserValidatorRules : AbstractValidator<User>
 {
     public UserValidatorRules()
     {
+        // TODO : Adding Fluent Validation rules
         RuleFor(x => x.Email)
             .EmailAddress()
             .WithMessage("Email no es valido")
@@ -16,10 +17,7 @@ public class UserValidatorRules : AbstractValidator<User>
             .NotEmpty()
             .WithMessage("Email es requerido");
         RuleFor(x => x.Password).NotNull().NotEmpty().WithMessage("Password es requerido");
-        RuleFor(x => x.FirstName)
-            .NotNull()
-            .NotEmpty()
-            .WithMessage("FirstName es requerido");
+        RuleFor(x => x.FirstName).NotNull().NotEmpty().WithMessage("FirstName es requerido");
         RuleFor(x => x.LastName).NotNull().NotEmpty().WithMessage("LastName es requerido");
     }
 }
