@@ -2,7 +2,7 @@ using System.Reflection;
 using FluentValidation;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using POS.Application.DTO.Request;
+using POS.Application.DTO.Request.User;
 using POS.Application.Interface;
 using POS.Application.Services;
 using POS.Application.Validators;
