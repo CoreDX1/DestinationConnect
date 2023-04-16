@@ -15,7 +15,7 @@ export default component$(() => {
     })
     const showSuccessMessage = useSignal(true)
 
-    const responseData = useSignal<IUserResponse>()
+    const responseData = useSignal<IUserResponse<string>>()
     const auth = useContext(AuthContext)
 
     const handlInputChange = $((e: QwikChangeEvent<HTMLInputElement>) => {
