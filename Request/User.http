@@ -15,8 +15,8 @@ POST {{host}}/Auth/Register
 Content-Type: : application/json
 
 {
-    "firstName": "Carla",
-    "lastName": "Albares",
-    "email": "carla@gmail.com",
-    "password": "pasdfendi12"
+  "firstName": "Leon",
+  "lastName": "Alturo",
+  "email": "leon@gmail.com",
+  "password": "index"
 }
