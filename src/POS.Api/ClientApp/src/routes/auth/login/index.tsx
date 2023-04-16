@@ -1,6 +1,6 @@
 import { useContext, type QwikChangeEvent } from "@builder.io/qwik"
 import { $, component$, useStore, useSignal } from "@builder.io/qwik"
-import type { IUserResponse } from "~/Interface/Response/IUserResponse"
+import type { BaseReponse } from "../../../Commons/Base/BaseResponse"
 import type { LoginData } from "~/Interface/Request/IUserRequest"
 import { UserApi } from "~/service/UserApi"
 import { AuthContext } from "~/root"
@@ -15,7 +15,7 @@ export default component$(() => {
     })
     const showSuccessMessage = useSignal(true)
 
-    const responseData = useSignal<IUserResponse<string>>()
+    const responseData = useSignal<BaseReponse<string>>()
     const auth = useContext(AuthContext)
 
     const handlInputChange = $((e: QwikChangeEvent<HTMLInputElement>) => {

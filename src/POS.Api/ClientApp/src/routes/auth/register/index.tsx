@@ -5,7 +5,7 @@ import {
     useSignal,
     type QwikChangeEvent,
 } from "@builder.io/qwik"
-import type { IUserResponse } from "~/Interface/Response/IUserResponse"
+import { type BaseReponse } from "~/Commons/Base/BaseResponse"
 import { User } from "~/service/UserApi"
 import { type Register } from "~/Interface/Request/IUserRequest"
 import { ErrorList } from "~/components/errorList"
@@ -18,10 +18,10 @@ export default component$(() => {
         email: "",
         password: "",
     })
-    const resgistrationResponse = useSignal<IUserResponse>()
+    const resgistrationResponse = useSignal<BaseReponse<Register>>()
     const showSuccessMessage = useSignal<boolean>(false)
 
-    const registerAccount = $(async (): Promise<IUserResponse> => {
+    const registerAccount = $(async (): Promise<BaseReponse<Register>> => {
         const res = new User("/Auth/Register")
         const data = await res.accountRegister(registrationData)
         resgistrationResponse.value = data
