@@ -28,6 +28,12 @@ public class LodgingRepository : GenericRepository<Lodging>, ILodgingRepository
             .Where(x => x.State.Equals(filter.StateFilter))
             .AsQueryable();
 
+        // TODO: Filter Lodgings Type
+        lodgins =
+            (!string.IsNullOrEmpty(filter.TextLodgingType))
+                ? lodgins.Where(x => x.LodgingType!.Contains(filter.TextLodgingType))
+                : lodgins;
+
         // TODO: Filters //
         if (filter.NumFilters != null && !string.IsNullOrEmpty(filter.TextFilter))
         {
@@ -35,7 +41,6 @@ public class LodgingRepository : GenericRepository<Lodging>, ILodgingRepository
             {
                 1 => x => x.Locality!.Contains(filter.TextFilter),
                 2 => x => x.Description!.Contains(filter.TextFilter),
-                3 => x => x.LodgingType!.Contains(filter.TextFilter),
                 _ => x => true
             };
             lodgins = lodgins.Where(predicate);
