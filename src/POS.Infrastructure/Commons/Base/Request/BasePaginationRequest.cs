@@ -6,7 +6,7 @@ public class BasePaginationRequest
     public int NumRecordPage { get; set; } = 10;
     private readonly int NumMaxRecordPage = 50;
     public string Order { get; set; } = "asc";
-    public string? Sort { get; set; } = null;
+    public string? Sort { get; set; } = "Id";
 
     public int Records
     {
