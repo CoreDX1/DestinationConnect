@@ -60,7 +60,7 @@ export const Formfilter = component$(() => {
                     {newMenu.map((item, index) => (
                         <span
                             key={index}
-                            class="border-2 rounded-full mx-2 px-4"
+                            class="border-2 rounded-full mx-2 px-4 hover:bg-white hover:text-[#270570] cursor-pointer"
                             id={item.label}
                             onClick$={handleSubmit}
                         >
