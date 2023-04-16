@@ -23,12 +23,9 @@ public class LodgingRepository : GenericRepository<Lodging>, ILodgingRepository
         var response = new BaseEntityResponse<Lodging>();
 
         // TODO: Requesting all the data in the table
-        IQueryable<Lodging> lodgins = (
-            from c in _context.Lodgings
-            where c.State.Equals(filter.StateFilter)
-            select c
-        )
+        IQueryable<Lodging> lodgins = _context.Lodgings
             .AsNoTracking()
+            .Where(x => x.State.Equals(filter.StateFilter))
             .AsQueryable();
 
         // TODO: Filters //
@@ -53,8 +50,6 @@ public class LodgingRepository : GenericRepository<Lodging>, ILodgingRepository
             DateTime endDate = Convert.ToDateTime(filter.EndData).AddDays(1);
             lodgins = lodgins.Where(x => x.DateStart >= startDate && x.DateEnd <= endDate);
         }
-
-        filter.Sort ??= "Id";
 
         response.TotalRecords = await lodgins.CountAsync();
         response.Items = await Ordering(filter, lodgins, true).ToListAsync();
