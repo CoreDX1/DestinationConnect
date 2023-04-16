@@ -16,7 +16,8 @@ Content-Type: application/json
   "numPage": 1,
   "numRecordPage": 10,
   "order": "asc",
-  "sort": "Id"
+  "sort": "Id",
+  "stateFilter": 0
 }
 
 # {
