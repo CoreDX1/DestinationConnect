@@ -2,7 +2,7 @@ import { useContext, type QwikChangeEvent } from "@builder.io/qwik"
 import { $, component$, useStore, useSignal } from "@builder.io/qwik"
 import type { BaseReponse } from "../../../Commons/Base/BaseResponse"
 import type { LoginData } from "~/Interface/Request/IUserRequest"
-import { UserApi } from "~/service/UserApi"
+import { User } from "~/service/UserApi"
 import { AuthContext } from "~/root"
 import { ErrorList } from "~/components/errorList"
 import { SuccessMessage } from "~/components/successMessage"
@@ -25,7 +25,7 @@ export default component$(() => {
     const navigate = useNavigate()
 
     const loginAccount = $(async () => {
-        const data = await UserApi.loginUser.accountLogin(loginData)
+        const data = await User.AccountLogin(loginData)
         responseData.value = data
         setTimeout(() => (showSuccessMessage.value = false), 5000)
         if (data.success) {
