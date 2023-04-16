@@ -1,39 +1,24 @@
-import { type IUserResponse } from "../Interface/Response/IUserResponse"
-import type { LoginData, Register } from "~/Interface/Request/IUserRequest"
+import { type BaseReponse } from "~/Commons/Base/BaseResponse"
 import axios from "axios"
+import type { LoginData, Register } from "~/Interface/Request/IUserRequest"
+import { URL_API } from "~/data/constantes"
 
-class Base {
-    protected root: string = "http://localhost:5278/api/User"
-    constructor(url: string) {
-        this.root += url
-    }
-}
-
-export class User extends Base {
-    constructor(url: string) {
-        super(url)
-    }
-
-    public accountLogin = async (user: LoginData): Promise<IUserResponse> => {
-        const { data } = await axios<IUserResponse>({
-            method: "POST",
-            url: this.root,
-            data: user,
-        })
+export class User {
+    static async AccountLogin(user: LoginData): Promise<BaseReponse<string>> {
+        const { data } = await axios.post<BaseReponse<string>>(
+            `${URL_API}/Auth/Login`,
+            user
+        )
         return data
     }
 
-    public accountRegister = async (user: Register): Promise<IUserResponse> => {
-        const { data } = await axios<IUserResponse>({
-            method: "POST",
-            url: this.root,
-            data: user,
-        })
-        console.log(data.data)
+    static async AccountRegister(
+        user: Register
+    ): Promise<BaseReponse<boolean>> {
+        const { data } = await axios.post<BaseReponse<boolean>>(
+            `${URL_API}/Auth/Register`,
+            user
+        )
         return data
     }
-}
-
-export const UserApi = {
-    loginUser : new User("/Auth/Login"),
 }
