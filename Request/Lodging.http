@@ -1,0 +1,33 @@
+@host = http://localhost:5278/api/Lodging
+
+### 
+
+// TODO : Show all lodging //
+GET {{host}}/select
+Content-Type: application/json
+
+###
+
+// TODO : Filter lodging //
+POST {{host}}
+Content-Type: application/json
+
+{
+  "numPage": 1,
+  "numRecordPage": 10,
+  "order": "asc",
+  "sort": "Id"
+}
+
+# {
+#   "numPage": 0,
+#   "numRecordPage": 0,
+#   "order": "string",
+#   "sort": "string",
+#   "records": 0,
+#   "numFilters": 0,
+#   "textFilter": "string",
+#   "stateFilter": 0,
+#   "startData": "string",
+#   "endData": "string"
+# }
