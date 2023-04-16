@@ -11,9 +11,7 @@ import type {
 } from "~/Interface/Response/IFormFilter"
 import menuItem from "~/service/LocalApi/MenuItem.json"
 import { type ILodgingRequestDto } from "~/Interface/Request/ILodgingRequestDto"
-import { Api } from "~/service/LodgingApi"
-import { type BaseReponse } from "~/Commons/Base/BaseResponse"
-import { ILodgingResponseDto } from "~/Interface/Response/ILodgingReponseDto"
+import { lodgingApi } from "~/service/LodgingApi"
 
 export const Formfilter = component$(() => {
     const form = useStore<ILodgingRequestDto>({
@@ -49,12 +47,7 @@ export const Formfilter = component$(() => {
     )
 
     const handleForm = $(async () => {
-        const api = await Api.Lodging.filterRequest<
-            BaseReponse<ILodgingResponseDto[]>,
-            ILodgingRequestDto
-        >("POST", form)
-        console.log(api)
-        console.log(form)
+        await lodgingApi.FilterLedging(form)
     })
 
     return (

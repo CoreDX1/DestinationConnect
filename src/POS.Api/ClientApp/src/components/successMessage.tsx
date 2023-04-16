@@ -1,8 +1,11 @@
 import { component$ } from "@builder.io/qwik"
-import type { IUserResponse } from "~/Interface/Response/IUserResponse"
+import type { BaseReponse } from "~/Commons/Base/BaseResponse"
 
 export const SuccessMessage = component$(
-    ({ message, success }: Pick<IUserResponse, "message" | "success">) => {
+    ({
+        message,
+        success,
+    }: Pick<BaseReponse<boolean>, "message" | "success">) => {
         return (
             <p
                 class={
