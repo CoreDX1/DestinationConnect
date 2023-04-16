@@ -11,6 +11,7 @@ builder.Services.AddInjectionApplication(Configuration);
 builder.Services.addAuthenticationApplication(Configuration);
 
 builder.Services.AddControllers();
+AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
 builder.Services.AddCors(options =>
 {
     options.AddPolicy(
