@@ -7,17 +7,23 @@ import {
 } from "@builder.io/qwik"
 import type {
     WithLabel,
-    IFormfilter,
     WithIdAndLabel,
 } from "~/Interface/Response/IFormFilter"
 import menuItem from "~/service/LocalApi/MenuItem.json"
+import { type ILodgingRequestDto } from "~/Interface/Request/ILodgingRequestDto"
+import { Api } from "~/service/LodgingApi"
+import { type BaseReponse } from "~/Commons/Base/BaseResponse"
+import { ILodgingResponseDto } from "~/Interface/Response/ILodgingReponseDto"
 
 export const Formfilter = component$(() => {
-    const form = useStore<IFormfilter>({
-        alojamiento: "",
-        destino: "",
-        fechaInicio: "",
-        fechaFin: "",
+    const form = useStore<ILodgingRequestDto>({
+        numPage: 1,
+        numRecordPage: 5,
+        textLodgingType: "",
+        numFilters: 1,
+        textFilter: "",
+        endData: "",
+        startData: "",
     })
 
     const createItemsWithId = <T extends WithLabel>(
@@ -38,12 +44,16 @@ export const Formfilter = component$(() => {
     const handleSubmit = $(
         (event: QwikMouseEvent<HTMLSpanElement, MouseEvent>) => {
             const { id } = event.target as HTMLSpanElement
-            const textModicate = id.replace(/\s+/g, "-").toLowerCase()
-            form["alojamiento"] = textModicate
+            form["textLodgingType"] = id
         }
     )
 
-    const handleForm = $(() => {
+    const handleForm = $(async () => {
+        const api = await Api.Lodging.filterRequest<
+            BaseReponse<ILodgingResponseDto[]>,
+            ILodgingRequestDto
+        >("POST", form)
+        console.log(api)
         console.log(form)
     })
 
@@ -72,7 +82,7 @@ export const Formfilter = component$(() => {
                     <label class="block text-sm">Destino</label>
                     <input
                         type="text"
-                        name="destino"
+                        name="textFilter"
                         class="w-full"
                         placeholder="ingresa Ubicacion"
                         onChange$={handleTest}
@@ -82,7 +92,7 @@ export const Formfilter = component$(() => {
                     <label class="block">Fecha de inicio</label>
                     <input
                         type="date"
-                        name="fechaInicio"
+                        name="startData"
                         placeholder="ingresa una fecha"
                         onChange$={handleTest}
                     />
@@ -91,7 +101,7 @@ export const Formfilter = component$(() => {
                     <label class="block">Fecha de fin</label>
                     <input
                         type="date"
-                        name="fechaFin"
+                        name="endData"
                         placeholder="ingresa una fecha"
                         onChange$={handleTest}
                     />
