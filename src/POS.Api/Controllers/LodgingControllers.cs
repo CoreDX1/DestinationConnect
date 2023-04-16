@@ -2,32 +2,31 @@ using Microsoft.AspNetCore.Mvc;
 using POS.Application.Interface;
 using POS.Infrastructure.Commons.Base.Request;
 
-namespace src.POS.Api.Controllers
+namespace src.POS.Api.Controllers;
+
+[ApiController]
+[Route("api/[controller]")]
+public class LodgingController : Controller
 {
-    [ApiController]
-    [Route("api/[controller]")]
-    public class LodgingControllers : ControllerBase
+    private readonly ILodgingApplication _app;
+
+    public LodgingController(ILodgingApplication app)
     {
-        private readonly ILodgingApplication _app;
+        _app = app;
+    }
 
-        public LodgingControllers(ILodgingApplication app)
-        {
-            _app = app;
-        }
+    [HttpPost]
+    public async Task<IActionResult> ListCategories([FromBody] BaseFiltersRequest filters)
+    {
+        var response = await _app.ListLodgings(filters);
+        return Ok(response);
+    }
 
-        [HttpPost]
-        public async Task<IActionResult> ListCategories([FromBody] BaseFiltersRequest filters)
-        {
-            var response = await _app.ListLodgings(filters);
-            return Ok(response);
-        }
-
-        [HttpGet]
-        [Route("Select")]
-        public async Task<IActionResult> GetLodgings()
-        {
-            var response = await _app.GetLodgings();
-            return Ok(response);
-        }
+    [HttpGet]
+    [Route("select")]
+    public async Task<IActionResult> GetLodgings()
+    {
+        var response = await _app.GetLodgings();
+        return Ok(response);
     }
 }
