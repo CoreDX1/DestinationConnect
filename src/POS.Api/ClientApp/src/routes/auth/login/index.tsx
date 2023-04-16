@@ -13,7 +13,7 @@ export default component$(() => {
         email: "",
         password: "",
     })
-    const showSuccessMessage = useSignal<boolean>(true)
+    const showSuccessMessage = useSignal(true)
 
     const responseData = useSignal<IUserResponse>()
     const auth = useContext(AuthContext)
