@@ -21,6 +21,7 @@ builder.Services.AddCors(options =>
         }
     );
 });
+builder.Services.AddRouting(routing => routing.LowercaseQueryStrings = true);
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
