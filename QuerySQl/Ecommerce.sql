@@ -45,6 +45,39 @@ VALUES
 ('Phoenix', '2023-06-01', '2023-06-15', 2, 4, 1, 120, 'A spacious room with a balcony in a 3-star hotel in Phoenix, with a fitness center and pool access', 'Hotel', 4),
 ('New Orleans', '2023-06-01', '2023-06-30', 1, 2, 1, 90, 'A charming room in a 1-star hotel in the historic French Quarter, with a courtyard and free breakfast', 'Hotel', 3);
 
+-- TODO: Miami
+INSERT INTO lodging (locality, date_start, date_end, rooms, capacity, state, price, description, lodging_type, rating) 
+VALUES 
+('Miami', '2023-05-01', '2023-05-05', 1, 2, 1, 1000, 'Cozy studio apartment', 'Apartment', 1),
+('Miami', '2023-06-10', '2023-06-15', 3, 6, 1, 1300, 'Spacious villa with private pool', 'Apartment', 2),
+('Miami', '2023-07-20', '2023-07-27', 2, 4, 1, 1200, 'Luxury oceanfront suite', 'Hotel', 3),
+('Miami', '2023-08-05', '2023-08-15', 2, 4, 1, 1180, 'Modern loft in downtown Miami', 'Apartment', 4),
+('Miami', '2023-09-01', '2023-09-07', 1, 2, 1, 1100, 'Charming cottage near the beach', 'Hotel', 5),
+('Miami', '2023-10-01', '2023-10-07', 1, 2, 1, 950, 'Beautifully decorated apartment in Little Havana', 'Apartment', 1),
+('Miami', '2023-11-15', '2023-11-20', 2, 4, 1, 1150, 'Spacious condo with city views', 'Hotel', 2),
+('Miami', '2023-12-10', '2023-12-20', 3, 6, 1, 1280, 'Private villa with pool and beach access', 'Apartment', 3),
+('Miami', '2023-01-05', '2023-01-10', 1, 2, 1, 1880, 'Cozy studio with ocean views', 'Hotel', 4),
+('Miami', '2023-02-01', '2023-02-05', 2, 4, 1, 1020, 'Bright and airy apartment near South Beach', 'Apartment', 5),
+('Miami', '2023-03-10', '2023-03-15', 2, 4, 1, 1180, 'Luxury suite in a boutique hotel', 'Hotel', 1),
+('Miami', '2023-04-01', '2023-04-07', 1, 2, 1, 3000, 'Quaint cottage with a garden oasis', 'Apartment', 2),
+('Miami', '2023-05-15', '2023-05-20', 3, 6, 1, 1300, 'Stylish villa with panoramic views', 'Hotel', 3),
+('Miami', '2023-06-10', '2023-06-15', 2, 4, 1, 1200, 'Chic loft in the heart of Wynwood', 'Apartment', 4),
+('Miami', '2023-07-20', '2023-07-27', 2, 4, 1, 1250, 'Luxury apartment in a high-rise building', 'Hotel', 5),
+('Miami', '2023-08-05', '2023-08-15', 3, 6, 1, 1350, 'Elegant villa with a private pool and spa', 'Apartment', 1),
+('Miami', '2023-09-01', '2023-09-07', 1, 2, 1, 1990, 'Charming studio near the Design District', 'Hotel', 2),
+('Miami', '2023-10-15', '2023-10-20', 2, 4, 1, 1150, 'Modern condo with bay views', 'Apartment', 3),
+('Miami', '2023-11-10', '2023-11-20', 3, 6, 1, 1280, 'Secluded villa with a private beach', 'hotel', 4),
+('Miami', '2023-12-05', '2023-12-10', 1, 2, 1, 1080, 'Cozy apartment in a historic building', 'Apartment', 5),
+('Miami', '2023-01-01', '2023-01-05', 2, 4, 1, 2120, 'Beachfront condo with stunning ocean views', 'Hotel', 1),
+('Miami', '2023-02-10', '2023-02-15', 1, 2, 1, 1100, 'Cozy cottage in the heart of Coconut Grove', 'Apartment', 2),
+('Miami', '2023-03-05', '2023-03-10', 2, 4, 1, 2180, 'Charming apartment with a private balcony', 'Hotel', 3),
+('Miami', '2023-04-15', '2023-04-20', 3, 6, 1, 2300, 'Luxury villa with a rooftop terrace', 'Apartment', 4),
+('Miami', '2023-05-10', '2023-05-15', 2, 4, 1, 2150, 'Modern loft with city views', 'Hotel', 5),
+('Miami', '2023-06-20', '2023-06-27', 2, 4, 1, 2250, 'Spacious apartment in a resort-style complex', 'Apartment', 1),
+('Miami', '2023-07-05', '2023-07-15', 3, 6, 1, 2350, 'Stylish villa with a private pool and outdoor kitchen', 'Hotel', 2),
+('Miami', '2023-08-01', '2023-08-07', 1, 2, 1, 3900, 'Bright studio in a trendy neighborhood', 'Apartment', 3),
+('Miami', '2023-09-15', '2023-09-20', 2, 4, 1, 1020, 'Elegant condo with panoramic bay views', 'Hotel', 4),
+('Miami', '2023-10-10', '2023-10-20', 3, 6, 1, 2080, 'Private villa with a tropical garden', 'Apartment', 5);
 
 create table UserRol(
     id SERIAL PRIMARY KEY,
