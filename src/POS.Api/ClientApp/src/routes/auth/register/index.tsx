@@ -6,10 +6,10 @@ import {
     type QwikChangeEvent,
 } from "@builder.io/qwik"
 import { type BaseReponse } from "~/Commons/Base/BaseResponse"
-import { User } from "~/service/UserApi"
 import { type Register } from "~/Interface/Request/IUserRequest"
 import { ErrorList } from "~/components/errorList"
 import { SuccessMessage } from "~/components/successMessage"
+import { User } from "~/service/UserApi"
 
 export default component$(() => {
     const registrationData = useStore<Register>({
@@ -18,16 +18,14 @@ export default component$(() => {
         email: "",
         password: "",
     })
-    const resgistrationResponse = useSignal<BaseReponse<Register>>()
-    const showSuccessMessage = useSignal<boolean>(false)
+    const resgistrationResponse = useSignal<BaseReponse<boolean>>()
+    const showSuccessMessage = useSignal(false)
 
-    const registerAccount = $(async (): Promise<BaseReponse<Register>> => {
-        const res = new User("/Auth/Register")
-        const data = await res.accountRegister(registrationData)
+    const registerAccount = $(async () => {
+        const data = await User.AccountRegister(registrationData)
         resgistrationResponse.value = data
         showSuccessMessage.value = true
         setTimeout(() => (showSuccessMessage.value = false), 5000)
-        return data
     })
 
     const updateRegistrationData = $((e: QwikChangeEvent<HTMLInputElement>) => {
