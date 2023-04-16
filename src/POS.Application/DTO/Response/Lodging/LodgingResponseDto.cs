@@ -7,5 +7,6 @@ public class LodgingResponseDto
     public string? LodgingType { get; set; }
     public string? Description { get; set; }
     public DateTime DateStart { get; set; }
+    public DateTime? DateEnd { get; set; }
     public int State { get; set; }
 }
