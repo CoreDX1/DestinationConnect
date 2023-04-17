@@ -1,28 +1,18 @@
-import { useContext, type QwikChangeEvent } from "@builder.io/qwik"
-import { $, component$, useStore, useSignal } from "@builder.io/qwik"
-import type { BaseReponse } from "../../../Commons/Base/BaseResponse"
-import type { LoginData } from "~/Interface/Request/IUserRequest"
+import { type QwikChangeEvent } from "@builder.io/qwik"
+import { $, component$ } from "@builder.io/qwik"
 import { User } from "~/service/UserApi"
-import { AuthContext } from "~/root"
 import { ErrorList } from "~/components/errorList"
 import { SuccessMessage } from "~/components/successMessage"
-import { useNavigate } from "@builder.io/qwik-city"
+import { useLogin } from "~/hooks/useLogin"
 
 export default component$(() => {
-    const loginData = useStore<LoginData>({
-        email: "",
-        password: "",
-    })
-    const showSuccessMessage = useSignal(true)
-
-    const responseData = useSignal<BaseReponse<string>>()
-    const auth = useContext(AuthContext)
+    const { auth, loginData, responseData, showSuccessMessage, navigate } =
+        useLogin()
 
     const handlInputChange = $((e: QwikChangeEvent<HTMLInputElement>) => {
         const { value, name } = e.target
         loginData[name] = value
     })
-    const navigate = useNavigate()
 
     const loginAccount = $(async () => {
         const data = await User.AccountLogin(loginData)
@@ -31,7 +21,7 @@ export default component$(() => {
         if (data.success) {
             auth.isLogged.value = true
             window.localStorage.setItem("myToken", JSON.stringify(data))
-            navigate("/solo/user")
+            navigate("/auth/solo/user")
         }
     })
 
@@ -41,12 +31,11 @@ export default component$(() => {
                 <a class="text-[40px] font-bold py-8" href="/home">
                     Login Form
                 </a>
-                {showSuccessMessage.value && (
-                    <SuccessMessage
-                        success={responseData.value?.success}
-                        message={responseData.value?.message}
-                    />
-                )}
+                <SuccessMessage
+                    show={showSuccessMessage.value}
+                    success={responseData.value?.success}
+                    message={responseData.value?.message}
+                />
                 <div class="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
                     <div class="p-6 space-y-4 md:space-y-6 sm:p-8">
                         <h1 class="text-xl font-bold leading-tight tracking-tight ">
