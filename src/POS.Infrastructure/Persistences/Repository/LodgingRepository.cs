@@ -28,11 +28,12 @@ public class LodgingRepository : GenericRepository<Lodging>, ILodgingRepository
             .Where(x => x.State.Equals(filter.StateFilter))
             .AsQueryable();
 
-        // TODO: Filter Lodgings Type
         lodgins =
-            (!string.IsNullOrEmpty(filter.TextLodgingType))
+            (!string.IsNullOrEmpty(filter.TextLodgingType) && filter.TextLodgingType != "Todos")
                 ? lodgins.Where(x => x.LodgingType!.Contains(filter.TextLodgingType))
                 : lodgins;
+
+        // TODO: Filter Lodgings Type
 
         // TODO: Filters //
         if (filter.NumFilters != null && !string.IsNullOrEmpty(filter.TextFilter))
