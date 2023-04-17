@@ -11,7 +11,7 @@ import type {
 } from "~/Interface/Response/IFormFilter"
 import menuItem from "~/service/LocalApi/MenuItem.json"
 import { type ILodgingRequestDto } from "~/Interface/Request/ILodgingRequestDto"
-import { lodgingApi } from "~/service/LodgingApi"
+import { useNavigate } from "@builder.io/qwik-city"
 
 export const Formfilter = component$(() => {
     const form = useStore<ILodgingRequestDto>({
@@ -33,6 +33,7 @@ export const Formfilter = component$(() => {
         }))
     }
     const newMenu = createItemsWithId(menuItem)
+    const navigate = useNavigate()
 
     const handleTest = $((e: QwikChangeEvent<HTMLInputElement>) => {
         const { value, name } = e.target
@@ -47,7 +48,11 @@ export const Formfilter = component$(() => {
     )
 
     const handleForm = $(async () => {
-        await lodgingApi.FilterLedging(form)
+        // await lodgingApi.FilterLedging(form)
+        // numPage=1&numRecordPage=10&numFilters=1&textLodgingType=hotel&textFilter=Madrid&startData=2022-01-01&endData=2022-01-10
+        navigate(
+            `/alojamientos/numPage=${form.numPage}&numRecordPage=${form.numRecordPage}&numFilters=${form.numFilters}&textLodgingType=${form.textLodgingType}&textFilter=${form.textFilter}&startData=${form.startData}&endData=${form.endData}`
+        )
     })
 
     return (
