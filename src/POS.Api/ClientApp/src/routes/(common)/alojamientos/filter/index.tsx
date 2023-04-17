@@ -1,5 +1,9 @@
 import { component$ } from "@builder.io/qwik"
 
 export default component$(() => {
-    return <></>
+    return (
+        <div>
+            <h1>Filter</h1>
+        </div>
+    )
 })

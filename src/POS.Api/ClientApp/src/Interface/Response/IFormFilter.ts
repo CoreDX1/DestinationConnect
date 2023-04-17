@@ -3,7 +3,7 @@ export interface IFormfilter {
     destino: string
     fechaInicio: string
     fechaFin: string
-    [key: string] : string
+    [key: string]: string
 }
 
 export interface WithLabel {

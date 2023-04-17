@@ -1,8 +1,8 @@
-import { type ErrorResponseDto} from "../../Interface/Response/ErrorResponseDto"
+import { type ErrorResponseDto } from "../../Interface/Response/ErrorResponseDto"
 
 export interface BaseReponse<T> {
-    success?: boolean  
-    message?: string 
+    success?: boolean
+    message?: string
     data: T
     errors: ErrorResponseDto
 }
