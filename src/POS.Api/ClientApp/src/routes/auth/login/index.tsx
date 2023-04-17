@@ -16,6 +16,7 @@ export default component$(() => {
 
     const loginAccount = $(async () => {
         const data = await User.AccountLogin(loginData)
+        console.log(data)
         responseData.value = data
         setTimeout(() => (showSuccessMessage.value = false), 5000)
         if (data.success) {
