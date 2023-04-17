@@ -1,29 +1,18 @@
-import {
-    $,
-    component$,
-    useStore,
-    useSignal,
-    type QwikChangeEvent,
-} from "@builder.io/qwik"
-import { type BaseReponse } from "~/Commons/Base/BaseResponse"
-import { type Register } from "~/Interface/Request/IUserRequest"
+import { $, component$, type QwikChangeEvent } from "@builder.io/qwik"
 import { ErrorList } from "~/components/errorList"
 import { SuccessMessage } from "~/components/successMessage"
-import { User } from "~/service/UserApi"
+import { useFetchUser } from "~/hooks/useFetchUser"
 
 export default component$(() => {
-    const registrationData = useStore<Register>({
-        lastname: "",
-        firstname: "",
-        email: "",
-        password: "",
-    })
-    const resgistrationResponse = useSignal<BaseReponse<boolean>>()
-    const showSuccessMessage = useSignal(false)
+    const {
+        registrationData,
+        resgistrationResponse,
+        showSuccessMessage,
+        reponseRegister,
+    } = useFetchUser()
 
     const registerAccount = $(async () => {
-        const data = await User.AccountRegister(registrationData)
-        resgistrationResponse.value = data
+        resgistrationResponse.value = await reponseRegister
         showSuccessMessage.value = true
         setTimeout(() => (showSuccessMessage.value = false), 5000)
     })
@@ -39,16 +28,11 @@ export default component$(() => {
                 <div class="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
                     <div class="p-6 space-y-4 md:space-y-6 sm:p-8">
                         <div class="text-center">
-                            {showSuccessMessage.value && (
-                                <SuccessMessage
-                                    success={
-                                        resgistrationResponse.value?.success
-                                    }
-                                    message={
-                                        resgistrationResponse.value?.message
-                                    }
-                                />
-                            )}
+                            <SuccessMessage
+                                show={showSuccessMessage.value}
+                                success={resgistrationResponse.value?.success}
+                                message={resgistrationResponse.value?.message}
+                            />
                         </div>
                         <h1 class="text-xl font-bold leading-tight tracking-tight ">
                             Register your account
