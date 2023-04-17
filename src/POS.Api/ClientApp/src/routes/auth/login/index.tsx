@@ -31,7 +31,7 @@ export default component$(() => {
         if (data.success) {
             auth.isLogged.value = true
             window.localStorage.setItem("myToken", JSON.stringify(data))
-            navigate("/user")
+            navigate("/solo/user")
         }
     })
 
