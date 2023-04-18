@@ -1,12 +1,13 @@
 using FluentValidation;
-using POS.Application.DTO.Request.User;
+using POS.Domain.Entities;
 
-namespace POS.Application.Validators;
+namespace POS.Application.Validation.UserValidation;
 
-public class UserLoginValidator : AbstractValidator<UserRequestDto>
+public class UserRegisterValidation : AbstractValidator<User>
 {
-    public UserLoginValidator()
+    public UserRegisterValidation()
     {
+        // TODO : Adding Fluent Validation rules
         RuleFor(x => x.Email)
             .EmailAddress()
             .WithMessage("Email no es valido")
@@ -16,5 +17,7 @@ public class UserLoginValidator : AbstractValidator<UserRequestDto>
             .NotEmpty()
             .WithMessage("Email es requerido");
         RuleFor(x => x.Password).NotNull().NotEmpty().WithMessage("Password es requerido");
+        RuleFor(x => x.FirstName).NotNull().NotEmpty().WithMessage("FirstName es requerido");
+        RuleFor(x => x.LastName).NotNull().NotEmpty().WithMessage("LastName es requerido");
     }
 }
