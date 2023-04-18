@@ -2,7 +2,9 @@ using System.Reflection;
 using FluentValidation;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using POS.Application.Commons.Base;
 using POS.Application.DTO.Request.User;
+using POS.Application.ErrorValidation.UserError;
 using POS.Application.Interface;
 using POS.Application.Services;
 using POS.Application.Validation.UserValidation;
@@ -20,6 +22,7 @@ public static class InjectionExtensions
         services.AddSingleton(configuration);
         services.AddScoped<IUserApplication, UserApplication>();
         services.AddScoped<ILodgingApplication, LodgingApplication>();
+        services.AddScoped<IMessageError, MessageError>();
         services.AddScoped<IValidator<User>, UserRegisterValidation>();
         services.AddScoped<IValidator<UserRequestDto>, UserLoginValidator>();
         services.AddAutoMapper(Assembly.GetExecutingAssembly());
