@@ -1,10 +1,7 @@
 import axios from "axios"
 import { type BaseReponse } from "~/Commons/Base/BaseResponse"
-// import { type ILodgingRequestDto } from "~/Interface/Request/ILodgingRequestDto"
-import type {
-    Items,
-} from "~/Interface/Response/ILodgingReponseDto"
-import { URL_API, } from "~/data/constantes"
+import type { Items } from "~/Interface/Response/ILodgingReponseDto"
+import { URL_API } from "~/data/constantes"
 
 class Lodging {
     public ListLedging = async () => {
@@ -22,7 +19,9 @@ class Lodging {
     // }
 
     public async FilterLedging() {
-        const { data } = await axios.get("http://localhost:5278/api/Lodging/filter/numPage=1&numRecordPage=5&numFilters=1&textLodgingType=Hotel&textFilter=Miami&startData=2023-01-01&endData=2023-12-02")
+        const { data } = await axios.get(
+            "http://localhost:5278/api/Lodging/filter/numPage=1&numRecordPage=5&numFilters=1&textLodgingType=Hotel&textFilter=Miami&startData=2023-01-01&endData=2023-12-02"
+        )
         return data
     }
 }
