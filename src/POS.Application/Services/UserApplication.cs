@@ -7,7 +7,6 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using POS.Application.Commons.Base;
 using POS.Application.DTO.Request.User;
-using POS.Application.DTO.Response;
 using POS.Application.Interface;
 using POS.Domain.Entities;
 using POS.Infrastructure.Persistences.Interfaces;
@@ -23,13 +22,15 @@ public class UserApplication : IUserApplication
     private readonly IValidator<User> _validator;
     private readonly IValidator<UserRequestDto> _login;
     private readonly IConfiguration _config;
+    private readonly IMessageError _messageError;
 
     public UserApplication(
         IUnitOfWork unitOfWork,
         IMapper mapper,
         IValidator<User> validator,
         IValidator<UserRequestDto> login,
-        IConfiguration config
+        IConfiguration config,
+        IMessageError messageError
     )
     {
         _unitOfWork = unitOfWork;
@@ -37,18 +38,19 @@ public class UserApplication : IUserApplication
         _validator = validator;
         _login = login;
         _config = config;
+        _messageError = messageError;
     }
 
     public async Task<BaseResponse<string>> Login(UserRequestDto userRequest)
     {
         BaseResponse<string> response = new();
         User user = _mapper.Map<User>(userRequest);
-        ErrorResponseDto validationResponse = await IsValidateLogin(user, "Login");
-        if (validationResponse.ErrorCount > 0)
+        var loginError = await _messageError.Login(userRequest);
+        if (loginError.ErrorCount > 0)
         {
             response.Success = false;
             response.Message = ReplyMessage.MESSAGE_VALIDATE;
-            response.Errors = validationResponse;
+            response.Errors!.Login = loginError;
             return response;
         }
         User account = await _unitOfWork.Users.GetUser(user);
@@ -71,12 +73,12 @@ public class UserApplication : IUserApplication
     {
         var response = new BaseResponse<bool>();
         //*TODO: Validate the user //
-        var validation = await IsValidateLogin(user, "Register");
+        var validation = await _messageError.Register(user);
         if (validation.ErrorCount > 0)
         {
             response.Success = false;
             response.Message = ReplyMessage.MESSAGE_VALIDATE;
-            response.Errors = validation;
+            response.Errors!.Register = validation;
             return response;
         }
         // TODO: Hash user password //
@@ -127,33 +129,5 @@ public class UserApplication : IUserApplication
         // TODO: Creating the token //
         var token = new JwtSecurityToken(header, playload);
         return new JwtSecurityTokenHandler().WriteToken(token);
-    }
-
-    public async Task<ErrorResponseDto> IsValidateLogin(User user, string form)
-    {
-        var isEmailValid = await _unitOfWork.Users.ValidateEmail(user);
-        var errorResponse = new ErrorResponseDto
-        {
-            Email = new List<string>(),
-            FirstName = new List<string>(),
-            LastName = new List<string>(),
-            Password = new List<string>(),
-        };
-
-        // TODO: When the user needs to register
-        if (form.Equals("Register") && isEmailValid)
-            errorResponse.Email.Add("El email ya existe");
-
-        var validateResult = await _validator.ValidateAsync(user);
-
-        // TODO: When the user needs to login
-        foreach (var error in validateResult.Errors)
-        {
-            List<string>? errorMessageList =
-                errorResponse.GetType().GetProperty(error.PropertyName)?.GetValue(errorResponse)
-                as List<string>;
-            errorMessageList?.Add(error.ErrorMessage);
-        }
-        return errorResponse;
     }
 }
