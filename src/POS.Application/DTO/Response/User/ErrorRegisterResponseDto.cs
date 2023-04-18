@@ -1,8 +1,8 @@
 using System.Text.Json.Serialization;
 
-namespace POS.Application.DTO.Response;
+namespace POS.Application.DTO.Response.User;
 
-public class ErrorResponseDto
+public class ErrorRegisterResponseDto
 {
     public List<string>? Email { get; set; }
     public List<string>? Password { get; set; }
@@ -12,6 +12,6 @@ public class ErrorResponseDto
     [JsonIgnore]
     public int ErrorCount
     {
-        get { return Email!.Count() + Password!.Count(); }
+        get { return Email!.Count() + Password!.Count() + FirstName!.Count() + LastName!.Count(); }
     }
 }
