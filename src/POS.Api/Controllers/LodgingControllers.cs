@@ -24,29 +24,9 @@ public class LodgingController : Controller
 
     // numPage=1&numRecordPage=10&numFilters=1&textLodgingType=hotel&textFilter=Madrid&startData=2022-01-01&endData=2022-01-10
     [HttpGet]
-    [Route(
-        "filter/numPage={numPage}&numRecordPage={numRecordPage}&numFilters={numFilters}&textLodgingType={textLodgingType}&textFilter={textFilter}&startData={startData}&endData={endData}"
-    )]
-    public async Task<IActionResult> ListLodgings(
-        [FromRoute] int numPage,
-        [FromRoute] int numRecordPage,
-        [FromRoute] int numFilters,
-        [FromRoute] string textLodgingType,
-        [FromRoute] string textFilter,
-        [FromRoute] string startData,
-        [FromRoute] string endData
-    )
+    [Route("lodgings")]
+    public async Task<IActionResult> ListLodgings([FromQuery] BaseFiltersRequest data)
     {
-        var data = new BaseFiltersRequest()
-        {
-            NumPage = numPage,
-            NumRecordPage = numRecordPage,
-            NumFilters = numFilters,
-            TextLodgingType = textLodgingType,
-            TextFilter = textFilter,
-            StartData = startData,
-            EndData = endData
-        };
         var response = await _app.ListLodgings(data);
         return Ok(response);
     }
