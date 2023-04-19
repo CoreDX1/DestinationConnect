@@ -6,5 +6,6 @@ export interface ILodgingRequestDto {
     textFilter: string
     startData: string
     endData: string
+    totalPages: number,
     [key: string]: any
 }

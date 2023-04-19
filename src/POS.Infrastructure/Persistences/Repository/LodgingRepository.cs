@@ -29,7 +29,6 @@ public class LodgingRepository : GenericRepository<Lodging>, ILodgingRepository
             .AsQueryable();
 
         // TODO: Filter Lodgings Type
-        //
         lodgins =
             (!string.IsNullOrEmpty(filter.TextLodgingType))
                 ? lodgins.Where(x => x.LodgingType!.Contains(filter.TextLodgingType))
@@ -57,9 +56,14 @@ public class LodgingRepository : GenericRepository<Lodging>, ILodgingRepository
             lodgins = lodgins.Where(x => x.DateStart >= startDate && x.DateEnd <= endDate);
         }
 
-        if(filter.Rating is not null)
+        if (filter.Rating is not null)
             lodgins = lodgins.Where(x => x.Rating == filter.Rating);
 
+        // TODO: Total Pages
+        double totalPages = (double)lodgins.Count() / filter.NumRecordPage;
+        int totalRecords = (int)Math.Ceiling(totalPages);
+
+        response.TotalPages = totalRecords;
         response.TotalRecords = await lodgins.CountAsync();
         response.Items = await Ordering(filter, lodgins, true).ToListAsync();
         return response;

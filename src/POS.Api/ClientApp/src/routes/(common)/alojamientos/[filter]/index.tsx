@@ -1,4 +1,5 @@
-import { component$ } from "@builder.io/qwik"
+import { $ } from "@builder.io/qwik"
+import { component$, useSignal, useTask$ } from "@builder.io/qwik"
 import { routeLoader$ } from "@builder.io/qwik-city"
 import { type BaseReponse } from "~/Commons/Base/BaseResponse"
 import type {
@@ -7,16 +8,65 @@ import type {
 } from "~/Interface/Response/ILodgingReponseDto"
 
 export const useHotelDetail = routeLoader$(async (requestEvent) => {
-    const res = await fetch(
-        `http://localhost:5278/api/Lodging/lodgings?${requestEvent.params.filter}`
-    )
-    const data: BaseReponse<ILodgingReponseDto<Items[]>> = await res.json()
-    return data
+    // const res = await fetch(
+    //     `http://localhost:5278/api/Lodging/lodgings?${requestEvent.params.filter}`
+    // )
+    // const data: BaseReponse<ILodgingReponseDto<Items[]>> = await res.json()
+    return requestEvent.params.filter
 })
 
-// numPage=1&numRecordPage=10&numFilters=1&textLodgingType=hotel&textFilter=Madrid&startData=2022-01-01&endData=2022-01-10
+type PropLodgingPage = {
+    ruta?: string
+    nextPage: number
+}
+
+export const Test = component$<PropLodgingPage>(({ nextPage, ruta }) => {
+    const todo = useSignal<BaseReponse<ILodgingReponseDto<Items[]>>>()
+
+    // TODO: Para Cambiar de pagina
+    const handlePageNext = $(async (page: number) => {
+        const res = await fetch(
+            `http://localhost:5278/api/Lodging/lodgings?NumPage=${page}&${ruta}`
+        )
+        const data: BaseReponse<ILodgingReponseDto<Items[]>> = await res.json()
+        console.log(data.data.items.length)
+        todo.value = data
+    })
+
+    useTask$(async () => {
+        const res = await fetch(
+            `http://localhost:5278/api/Lodging/lodgings?NumPage=${nextPage}&${ruta}`
+        )
+        const data: BaseReponse<ILodgingReponseDto<Items[]>> = await res.json()
+        todo.value = data
+    })
+    return (
+        <div>
+            {todo.value?.data.items.map((item) => (
+                <div key={item.id}>
+                    <h1>{item.price}</h1>
+                </div>
+            ))}
+            <button onClick$={() => handlePageNext(nextPage)}>
+                Siguiente Pagina
+            </button>
+        </div>
+    )
+})
+
 export default component$(() => {
     const signal = useHotelDetail()
+    const pagination = useSignal(1)
+    const todo = useSignal<BaseReponse<ILodgingReponseDto<Items[]>>>()
+
+    useTask$(async () => {
+        const res = await fetch(
+            `http://localhost:5278/api/Lodging/lodgings?NumPage=${pagination.value}&${signal.value}`
+        )
+        const data: BaseReponse<ILodgingReponseDto<Items[]>> = await res.json()
+        todo.value = data
+    })
+
     const starRating = (start: number) => {
         const stars = []
         for (let i = 0; i < start; i++) {
@@ -32,8 +82,8 @@ export default component$(() => {
     }
     return (
         <div>
-            <h1>{signal.value.data.items.length}</h1>
-            {signal.value.data.items.map((item) => (
+            <h1>{todo.value?.data.items.length}</h1>
+            {todo.value?.data.items.map((item) => (
                 <div key={item.id} class="flex justify-center">
                     <div class="m-3 h-[333px] border border-black rounded-xl grid grid-cols-text">
                         <div class="bg-slate-400 text-center m-2"></div>
@@ -67,10 +117,8 @@ export default component$(() => {
                     </div>
                 </div>
             ))}
-            <div>
-                Paginate{" "}
-                {signal.value.data.items.map((item) => item.description)}
-            </div>
+            <div>Total de paginas: {todo.value?.data.totalPages}</div>
+            <Test ruta={signal.value} nextPage={pagination.value++} />
         </div>
     )
 })
