@@ -12,4 +12,5 @@ export interface Items {
     dateStart: string
     dateEnd: string
     state: number
+    rating: number
 }
