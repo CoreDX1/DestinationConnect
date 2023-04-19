@@ -28,12 +28,12 @@ public class LodgingRepository : GenericRepository<Lodging>, ILodgingRepository
             .Where(x => x.State.Equals(filter.StateFilter))
             .AsQueryable();
 
+        // TODO: Filter Lodgings Type
+        //
         lodgins =
-            (!string.IsNullOrEmpty(filter.TextLodgingType) && filter.TextLodgingType != "Todos")
+            (!string.IsNullOrEmpty(filter.TextLodgingType))
                 ? lodgins.Where(x => x.LodgingType!.Contains(filter.TextLodgingType))
                 : lodgins;
-
-        // TODO: Filter Lodgings Type
 
         // TODO: Filters //
         if (filter.NumFilters != null && !string.IsNullOrEmpty(filter.TextFilter))
@@ -56,6 +56,9 @@ public class LodgingRepository : GenericRepository<Lodging>, ILodgingRepository
             DateTime endDate = Convert.ToDateTime(filter.EndData).AddDays(1);
             lodgins = lodgins.Where(x => x.DateStart >= startDate && x.DateEnd <= endDate);
         }
+
+        if(filter.Rating is not null)
+            lodgins = lodgins.Where(x => x.Rating == filter.Rating);
 
         response.TotalRecords = await lodgins.CountAsync();
         response.Items = await Ordering(filter, lodgins, true).ToListAsync();
