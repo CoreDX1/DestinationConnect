@@ -8,4 +8,5 @@ public class BaseFiltersRequest : BasePaginationRequest
     public int? StateFilter { get; set; } = 1;
     public string? StartData { get; set; } = null;
     public string? EndData { get; set; } = null;
+    public int? Rating { get; set; }
 }
