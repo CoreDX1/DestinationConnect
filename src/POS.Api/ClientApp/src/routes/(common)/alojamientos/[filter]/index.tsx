@@ -6,7 +6,6 @@ import type {
     ILodgingReponseDto,
     Items,
 } from "~/Interface/Response/ILodgingReponseDto"
-import { PruebaDeNavegacion } from ".."
 
 export const useHotelDetail = routeLoader$(async (requestEvent) => {
     return requestEvent.params.filter
@@ -98,7 +97,7 @@ export default component$(() => {
         const transformedNumPage = Number(numPage)
 
         const newRuta = signal.value?.replace(
-            `NumPage=${pagination.value}&`,
+            `NumPage=${transformedNumPage}&`,
             ""
         )
         if (transformedNumPage >= pagination.value) {
@@ -113,7 +112,6 @@ export default component$(() => {
     return (
         <div>
             <div>Total de paginas: {todo.value?.data.totalPages}</div>
-            <PruebaDeNavegacion />
             <Test
                 ruta={signal.value}
                 nextPage={handleClickNext}
