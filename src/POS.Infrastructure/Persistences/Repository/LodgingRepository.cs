@@ -59,6 +59,7 @@ public class LodgingRepository : GenericRepository<Lodging>, ILodgingRepository
         if (filter.Rating is not null)
             lodgins = lodgins.Where(x => x.Rating == filter.Rating);
 
+
         // TODO: Total Pages
         double totalPages = (double)lodgins.Count() / filter.NumRecordPage;
         int totalRecords = (int)Math.Ceiling(totalPages);

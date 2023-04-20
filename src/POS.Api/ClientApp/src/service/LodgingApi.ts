@@ -11,12 +11,6 @@ class Lodging {
         return data
     }
 
-    // public async FilterLedging(filter: ILodgingRequestDto) {
-    //     const { data } = await axios.post<
-    //         BaseReponse<ILodgingReponseDto<Items[]>>
-    //     >(`${URL_API}/Lodging`, filter)
-    //     return data
-    // }
 
     public async FilterLedging() {
         const { data } = await axios.get(
