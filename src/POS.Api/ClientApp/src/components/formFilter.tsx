@@ -50,7 +50,7 @@ export const Formfilter = component$(() => {
 
     const handleForm = $(async () => {
         navigate(
-            `/alojamientos/NumPage=${form.numPage}&NumRecordPage=${form.numRecordPage}&NumFilters=${form.numFilters}&TextLodgingType=${form.textLodgingType}&TextFilter=${form.textFilter}&StartData=${form.startData}&EndData=${form.endData}`
+            `/alojamientos/NumRecordPage=${form.numRecordPage}&NumFilters=${form.numFilters}&TextLodgingType=${form.textLodgingType}&TextFilter=${form.textFilter}&StartData=${form.startData}&EndData=${form.endData}`
         )
     })
 
