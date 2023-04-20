@@ -6,6 +6,7 @@ import type {
     ILodgingReponseDto,
     Items,
 } from "~/Interface/Response/ILodgingReponseDto"
+import { PruebaDeNavegacion } from ".."
 
 export const useHotelDetail = routeLoader$(async (requestEvent) => {
     return requestEvent.params.filter
@@ -100,18 +101,18 @@ export default component$(() => {
     const todo = useSignal<BaseReponse<ILodgingReponseDto<Items[]>>>()
 
     useTask$(async () => {
-        console.log(signal.value)
+        // !BUG : Esto lo hace en servidor
         const res = await fetch(
             `http://localhost:5278/api/Lodging/lodgings?${signal.value}`
         )
         const data: BaseReponse<ILodgingReponseDto<Items[]>> = await res.json()
-        console.log(data.data.items.length)
         todo.value = data
     })
 
     return (
         <div>
             <div>Total de paginas: {todo.value?.data.totalPages}</div>
+            <PruebaDeNavegacion />
             <Test
                 ruta={signal.value}
                 nextPage={pagination.value++}

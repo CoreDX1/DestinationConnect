@@ -49,8 +49,6 @@ export const Formfilter = component$(() => {
     )
 
     const handleForm = $(async () => {
-        // await lodgingApi.FilterLedging(form)
-        // numPage=1&numRecordPage=10&numFilters=1&textLodgingType=hotel&textFilter=Madrid&startData=2022-01-01&endData=2022-01-10
         navigate(
             `/alojamientos/NumPage=${form.numPage}&NumRecordPage=${form.numRecordPage}&NumFilters=${form.numFilters}&TextLodgingType=${form.textLodgingType}&TextFilter=${form.textFilter}&StartData=${form.startData}&EndData=${form.endData}`
         )
