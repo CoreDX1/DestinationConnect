@@ -82,7 +82,6 @@ export default component$(() => {
     const todo = useSignal<BaseReponse<ILodgingReponseDto<Items[]>>>()
 
     useTask$(async () => {
-        // !BUG : Esto lo hace en servidor
         const res = await fetch(
             `http://localhost:5278/api/Lodging/lodgings?${signal.value}`
         )
@@ -91,7 +90,6 @@ export default component$(() => {
     })
 
     const handleClickNext = $(() => {
-        console.log(signal.value)
         const params = new URLSearchParams(signal.value)
         const numPage = params.get("NumPage")
         const transformedNumPage = Number(numPage)
