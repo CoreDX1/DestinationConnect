@@ -1,6 +1,6 @@
 import axios from "axios"
 import { type BaseReponse } from "~/Commons/Base/BaseResponse"
-import type { Items } from "~/Interface/Response/ILodgingReponseDto"
+import type {  ILodgingReponseDto, Items } from "~/Interface/Response/ILodgingReponseDto"
 import { URL_API } from "~/data/constantes"
 
 class Lodging {
@@ -11,12 +11,11 @@ class Lodging {
         return data
     }
 
-
-    public async FilterLedging() {
-        const { data } = await axios.get(
-            "http://localhost:5278/api/Lodging/filter/numPage=1&numRecordPage=5&numFilters=1&textLodgingType=Hotel&textFilter=Miami&startData=2023-01-01&endData=2023-12-02"
-        )
-        return data
+    public filterLedging = async (pag: number , url: string | undefined) => {
+         const { data} = await axios.get<BaseReponse<ILodgingReponseDto<Items[]>>>(
+             `http://localhost:5278/api/Lodging/lodgings?NumPage=${pag}&${url}`
+         )
+         return data
     }
 }
 
