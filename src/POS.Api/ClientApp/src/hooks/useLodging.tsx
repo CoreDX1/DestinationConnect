@@ -1,12 +1,6 @@
-import { $, useSignal } from "@builder.io/qwik"
-import { type BaseReponse } from "~/Commons/Base/BaseResponse"
-import type {
-    ILodgingReponseDto,
-    Items,
-} from "~/Interface/Response/ILodgingReponseDto"
+import { $ } from "@builder.io/qwik"
 
 export const useLodging = () => {
-    const todo = useSignal<BaseReponse<ILodgingReponseDto<Items[]>>>()
     const starRating = $((start: number) => {
         const stars = []
         for (let i = 0; i < start; i++) {
@@ -25,16 +19,6 @@ export const useLodging = () => {
         }
     })
 
-    const fetchLodgings = $(async (url: string, pag: number) => {
-        const res: Response = await fetch(
-            `http://localhost:5278/api/Lodging/lodgings?NumPage=${pag}&${url}`
-        )
-        const data = (await res.json()) as BaseReponse<
-            ILodgingReponseDto<Items[]>
-        >
-        todo.value = data
-    })
-
     const formater = $((date: string) => {
         const fecha = new Date(date)
         return `${fecha.getFullYear()}/${
@@ -43,10 +27,8 @@ export const useLodging = () => {
     })
 
     return {
-        todo,
         starRating,
         formater,
         getUrlParams,
-        fetchLodgings,
     }
 }

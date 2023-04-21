@@ -10,6 +10,7 @@ import type {
     ILodgingReponseDto,
     Items,
 } from "~/Interface/Response/ILodgingReponseDto"
+import { useLodging } from "~/hooks/useLodging"
 import { lodgingApi } from "~/service/LodgingApi"
 
 type PropLodgingPage = {
@@ -22,19 +23,7 @@ type PropLodgingPage = {
 
 export const ListContent = component$<PropLodgingPage>(
     ({ ruta, todo, newUrl }) => {
-        const starRating = (start: number) => {
-            const stars = []
-            for (let i = 0; i < start; i++) {
-                stars.push("x")
-            }
-            return <span>{stars.join("")}</span>
-        }
-        const formater = (date: string) => {
-            const fecha = new Date(date)
-            return `${fecha.getFullYear()}/${
-                fecha.getMonth() + 1
-            }/${fecha.getDay()}`
-        }
+        const { starRating, formater } = useLodging()
         const pageTotal = todo.value?.data?.totalPages ?? 0
         const urlParams = new URLSearchParams(ruta)
         const valorPage = urlParams.get("NumPage")
@@ -46,8 +35,8 @@ export const ListContent = component$<PropLodgingPage>(
 
             if (pagination.value <= 0) pagination.value = 1
             if (pagination.value > pageTotal) pagination.value = pageTotal
-
             if (newPage <= pageTotal) {
+                console.log(pagination.value)
                 const filter = await lodgingApi.filterLedging(
                     pagination.value,
                     ruta
