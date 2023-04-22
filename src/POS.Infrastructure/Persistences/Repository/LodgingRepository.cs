@@ -10,12 +10,8 @@ namespace POS.Infrastructure.Persistences.Repository;
 
 public class LodgingRepository : GenericRepository<Lodging>, ILodgingRepository
 {
-    private readonly DestinationConnectContext _context;
-
     public LodgingRepository(DestinationConnectContext context)
-    {
-        _context = context;
-    }
+        : base(context) { }
 
     // TODO : Filters and Ordering  //
     public async Task<BaseEntityResponse<Lodging>> ListLodging(BaseFiltersRequest filter)
@@ -28,11 +24,9 @@ public class LodgingRepository : GenericRepository<Lodging>, ILodgingRepository
             .Where(x => x.State.Equals(filter.StateFilter))
             .AsQueryable();
 
-        // TODO: Filter Lodgings Type
-        lodgins =
-            (!string.IsNullOrEmpty(filter.TextLodgingType))
-                ? lodgins.Where(x => x.LodgingType!.Contains(filter.TextLodgingType))
-                : lodgins;
+        // TODO: Filter By Type
+        if(!string.IsNullOrEmpty(filter.TextLodgingType))
+            lodgins = lodgins.Where(x => x.LodgingType!.Equals(filter.TextLodgingType));
 
         // TODO: Filters //
         if (filter.NumFilters != null && !string.IsNullOrEmpty(filter.TextFilter))
@@ -58,7 +52,6 @@ public class LodgingRepository : GenericRepository<Lodging>, ILodgingRepository
 
         if (filter.Rating is not null)
             lodgins = lodgins.Where(x => x.Rating == filter.Rating);
-
 
         // TODO: Total Pages
         double totalPages = (double)lodgins.Count() / filter.NumRecordPage;

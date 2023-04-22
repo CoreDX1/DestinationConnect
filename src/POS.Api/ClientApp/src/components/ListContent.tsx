@@ -24,18 +24,28 @@ type PropLodgingPage = {
 export const ListContent = component$<PropLodgingPage>(
     ({ ruta, todo, newUrl }) => {
         const { starRating, formater } = useLodging()
-        const pageTotal = todo.value?.data?.totalPages ?? 0
+
+        // * Refactor this Code
         const urlParams = new URLSearchParams(ruta)
-        const valorPage = urlParams.get("NumPage")
-        const pagination = useSignal<number>(1)
+        const valorPage = Number(urlParams.get("NumPage"))
+        const pageTotal = todo.value?.data?.totalPages ?? 0
+
+        const pagination = useSignal<number>(valorPage)
+
+        const setPaginationValue = $(() => {
+            pagination.value == 0 && (pagination.value = 1)
+            pagination.value >= pageTotal && (pagination.value = pageTotal)
+            const value = pagination.value
+            return value
+        })
 
         const handlePage = $(async (direction: "next" | "prev") => {
             const newPage =
                 direction === "next" ? pagination.value++ : pagination.value--
 
-            if (pagination.value <= 0) pagination.value = 1
-            if (pagination.value > pageTotal) pagination.value = pageTotal
             if (newPage <= pageTotal) {
+                //  * Refactor this Method
+                setPaginationValue()
                 console.log(pagination.value)
                 const filter = await lodgingApi.filterLedging(
                     pagination.value,

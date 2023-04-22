@@ -5,11 +5,12 @@ using POS.Infrastructure.Persistences.Interfaces;
 
 namespace POS.Infrastructure.Persistences.Repository;
 
-public class UserRespositoy : IUserRepositoy
+public class UserRespositoy : GenericRepository<User>, IUserRepositoy
 {
-    private readonly DestinationConnectContext _context;
 
-    public UserRespositoy(DestinationConnectContext context) => _context = context;
+    public UserRespositoy(DestinationConnectContext context) : base(context)
+    {
+    }
 
     public async Task<bool> AddUser(User user)
     {

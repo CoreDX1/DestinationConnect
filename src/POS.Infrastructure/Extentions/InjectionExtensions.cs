@@ -24,6 +24,8 @@ public static class InjectionExtensions
             ServiceLifetime.Transient
         );
         services.AddTransient<IUnitOfWork, UnitOfWork>();
+        services.AddTransient<IUserRepositoy, UserRespositoy>();
+        services.AddTransient<ILodgingRepository, LodgingRepository>();
         return services;
     }
 }

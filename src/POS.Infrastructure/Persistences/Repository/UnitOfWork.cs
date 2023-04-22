@@ -5,17 +5,21 @@ namespace POS.Infrastructure.Persistences.Repository;
 
 public class UnitOfWork : IUnitOfWork
 {
-    public IUserRepositoy Users { get; private set; }
+    private readonly DestinationConnectContext _context;
+
+    public IUserRepositoy Users { get; }
 
     public ILodgingRepository Lodgings { get; private set; }
 
-    private readonly DestinationConnectContext _context;
-
-    public UnitOfWork(DestinationConnectContext context)
+    public UnitOfWork(
+        DestinationConnectContext destinationDbContext,
+        IUserRepositoy usersRespository,
+        ILodgingRepository lodgingsRespository
+    )
     {
-        _context = context;
-        Users = new UserRespositoy(_context);
-        Lodgings = new LodgingRepository(_context);
+        this._context = destinationDbContext;
+        this.Lodgings = lodgingsRespository;
+        this.Users = usersRespository;
     }
 
     public void Dispose()
