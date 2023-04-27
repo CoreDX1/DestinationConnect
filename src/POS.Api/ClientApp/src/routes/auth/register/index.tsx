@@ -46,7 +46,7 @@ export default component$(() => {
                                     <ErrorList
                                         message={
                                             resgistrationResponse.value?.errors
-                                                .firstName
+                                                .register.firstName
                                         }
                                     />
                                 )}
@@ -70,7 +70,7 @@ export default component$(() => {
                                     <ErrorList
                                         message={
                                             resgistrationResponse.value?.errors
-                                                .lastName
+                                                .register.lastName
                                         }
                                     />
                                 )}
@@ -91,7 +91,7 @@ export default component$(() => {
                                     <ErrorList
                                         message={
                                             resgistrationResponse.value?.errors
-                                                .email
+                                                .register.email
                                         }
                                     />
                                 )}
@@ -112,7 +112,7 @@ export default component$(() => {
                                     <ErrorList
                                         message={
                                             resgistrationResponse.value?.errors
-                                                .password
+                                                .register.password
                                         }
                                     />
                                 )}
