@@ -47,7 +47,6 @@ public class MessageError : IMessageError
 
     public async Task<ErrorRegisterResponseDto> Register(User user)
     {
-        var isEmailValid = await _unitOfWork.Users.ValidateEmail(user);
         var errorResponse = new ErrorRegisterResponseDto
         {
             Email = new List<string>(),
@@ -56,8 +55,11 @@ public class MessageError : IMessageError
             Password = new List<string>(),
         };
 
-        // TODO: When the user needs to register
-        errorResponse.Email.Add("El email ya existe");
+        bool isEmailValid = await _unitOfWork.Users.ValidateEmail(user);
+
+        if (!isEmailValid)
+            errorResponse.Email.Add("Email is not valid");
+
         var validateResult = await _validatorRegister.ValidateAsync(user);
 
         // TODO: When the user needs to login
