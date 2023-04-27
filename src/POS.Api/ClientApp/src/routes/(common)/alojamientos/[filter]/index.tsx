@@ -17,10 +17,10 @@ export default component$(() => {
     const { getUrlParams } = useLodging()
     const signal = useHotelDetail()
     const pagination = useSignal(Number(signal.value))
-    const todo = useSignal<BaseReponse<ILodgingReponseDto<Items[]>>>()
+    const todo = useSignal<BaseReponse<ILodgingReponseDto<Items[]>, null>>()
 
     useTask$(async () => {
-        const res: BaseReponse<ILodgingReponseDto<Items[]>> = await fetch(
+        const res: BaseReponse<ILodgingReponseDto<Items[]>, null> = await fetch(
             `http://localhost:5278/api/Lodging/lodgings?${signal.value}`
         ).then((res) => res.json())
         todo.value = res
@@ -42,7 +42,6 @@ export default component$(() => {
 
     return (
         <div>
-            <div>Total de paginas: {todo.value?.data?.totalPages}</div>
             <ListContent
                 newUrl={handleClickPagination}
                 ruta={signal.value}
