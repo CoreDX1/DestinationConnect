@@ -54,6 +54,7 @@ public class UserApplication : IUserApplication
             return response;
         }
         User account = await _unitOfWork.Users.GetUser(user);
+
         // TODO : Validate the user //
         if (account is not null && BC.Verify(userRequest.Password, account.Password))
         {

@@ -26,7 +26,8 @@ public class LodgingApplication : ILodgingApplication
     )
     {
         var response = new BaseResponse<BaseEntityResponse<LodgingResponseDto>>();
-        var lodgings = await _unitOfWork.Lodgings.ListLodging(filters);
+        BaseEntityResponse<Lodging> lodgings = await _unitOfWork.Lodgings.ListLodging(filters);
+
         if (lodgings is not null)
         {
             response.Success = true;

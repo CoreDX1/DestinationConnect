@@ -25,7 +25,7 @@ public class LodgingRepository : GenericRepository<Lodging>, ILodgingRepository
             .AsQueryable();
 
         // TODO: Filter By Type
-        if(!string.IsNullOrEmpty(filter.TextLodgingType))
+        if (!string.IsNullOrEmpty(filter.TextLodgingType))
             lodgins = lodgins.Where(x => x.LodgingType!.Equals(filter.TextLodgingType));
 
         // TODO: Filters //
