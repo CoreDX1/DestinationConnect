@@ -58,7 +58,8 @@ export default component$(() => {
                                 {!responseData.value?.success && (
                                     <ErrorList
                                         message={
-                                            responseData.value?.errors.email
+                                            responseData.value?.errors.login
+                                                .email
                                         }
                                     />
                                 )}
@@ -80,7 +81,8 @@ export default component$(() => {
                                 {!responseData.value?.success && (
                                     <ErrorList
                                         message={
-                                            responseData.value?.errors.password
+                                            responseData.value?.errors.login
+                                                .password
                                         }
                                     />
                                 )}

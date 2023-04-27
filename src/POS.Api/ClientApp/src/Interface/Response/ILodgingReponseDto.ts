@@ -1,6 +1,6 @@
 export interface ILodgingReponseDto<T>{
         totalRecords : number
-        totalPages : number | undefined
+        totalPages : number  
         items : T
 }
 

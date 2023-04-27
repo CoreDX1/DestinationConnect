@@ -15,8 +15,6 @@ import { lodgingApi } from "~/service/LodgingApi"
 
 type PropLodgingPage = {
     ruta?: string
-    nextPage: number
-    prevPage: number
     todo: Signal<BaseReponse<ILodgingReponseDto<Items[]>> | undefined>
     newUrl: QRL<(direction: "next" | "prev") => Promise<void>>
 }
@@ -32,20 +30,18 @@ export const ListContent = component$<PropLodgingPage>(
 
         const pagination = useSignal<number>(valorPage)
 
+        // TODO: call the api
         const handlePage = $(async (direction: "next" | "prev") => {
-            const newPage =
-                direction === "next" ? pagination.value++ : pagination.value--
+            direction === "next" ? pagination.value++ : pagination.value--
 
             pagination.value <= 0 && (pagination.value = 1)
             pagination.value >= pageTotal && (pagination.value = pageTotal)
 
-            if (newPage <= pageTotal) {
-                const filter = await lodgingApi.filterLedging(
-                    pagination.value,
-                    ruta
-                )
-                todo.value = filter
-            }
+            const filter = await lodgingApi.filterLedging(
+                pagination.value,
+                ruta
+            )
+            todo.value = filter
         })
 
         return (

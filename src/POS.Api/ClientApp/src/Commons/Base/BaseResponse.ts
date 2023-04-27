@@ -1,8 +1,8 @@
-import { type ErrorResponseDto } from "../../Interface/Response/ErrorResponseDto"
+import { type ILoginResponseDto } from "~/Interface/Response/ILoginResponseDto"
 
 export interface BaseReponse<T> {
     success?: boolean
     message?: string
-    data: T | undefined
-    errors: ErrorResponseDto
+    data: T
+    errors: ILoginResponseDto
 }

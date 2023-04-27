@@ -16,22 +16,26 @@ export const useHotelDetail = routeLoader$(async (requestEvent) => {
 export default component$(() => {
     const { getUrlParams } = useLodging()
     const signal = useHotelDetail()
-    const pagination = useSignal(1)
+    const pagination = useSignal(Number(signal.value))
     const todo = useSignal<BaseReponse<ILodgingReponseDto<Items[]>>>()
 
     useTask$(async () => {
-        const res = await fetch(
+        const res: BaseReponse<ILodgingReponseDto<Items[]>> = await fetch(
             `http://localhost:5278/api/Lodging/lodgings?${signal.value}`
-        )
-        const data: BaseReponse<ILodgingReponseDto<Items[]>> = await res.json()
-        todo.value = data
+        ).then((res) => res.json())
+        todo.value = res
     })
+
     const navigation = useNavigate()
 
+    // TODO: Change the url the page
     const handleClickPagination = $(async (direction: "next" | "prev") => {
         const { newUrl, pageNum } = await getUrlParams(signal.value)
+
         pagination.value = direction === "next" ? pageNum + 1 : pageNum - 1
-        const pageTotal = todo.value?.data?.totalPages ?? 0
+
+        const pageTotal = todo.value?.data.totalPages as number
+
         if (pagination.value >= 1 && pagination.value <= pageTotal)
             navigation(`/alojamientos/NumPage=${pagination.value}&${newUrl}`)
     })
@@ -42,8 +46,6 @@ export default component$(() => {
             <ListContent
                 newUrl={handleClickPagination}
                 ruta={signal.value}
-                nextPage={pagination.value++}
-                prevPage={pagination.value--}
                 todo={todo}
             />
         </div>
