@@ -33,6 +33,8 @@ export const ListContent = component$<PropLodgingPage>(
         const pagination = useSignal<number>(valorPage)
 
         const setPaginationValue = $(() => {
+            pagination.value <= 0 && (pagination.value = 1)
+            pagination.value >= pageTotal && (pagination.value = pageTotal)
             const value = pagination.value
             return value
         })
@@ -41,11 +43,8 @@ export const ListContent = component$<PropLodgingPage>(
             const newPage =
                 direction === "next" ? pagination.value++ : pagination.value--
             setPaginationValue()
-
             if (newPage <= pageTotal) {
                 //  * Refactor this Method
-                pagination.value >= 0 && (pagination.value = 1)
-                pagination.value >= pageTotal && (pagination.value = pageTotal)
                 console.log(pagination.value)
                 const filter = await lodgingApi.filterLedging(
                     pagination.value,
