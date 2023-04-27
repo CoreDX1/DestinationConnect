@@ -1,5 +1,8 @@
 import { useSignal, useStore } from "@builder.io/qwik"
-import { type BaseReponse } from "~/Commons/Base/BaseResponse"
+import type {
+    IRegisterResponseDto,
+    BaseReponse,
+} from "~/Commons/Base/BaseResponse"
 import { type Register } from "~/Interface/Request/IUserRequest"
 import { User } from "~/service/UserApi"
 
@@ -10,7 +13,8 @@ export const useFetchUser = () => {
         email: "",
         password: "",
     })
-    const resgistrationResponse = useSignal<BaseReponse<boolean>>()
+    const resgistrationResponse =
+        useSignal<BaseReponse<boolean, IRegisterResponseDto>>()
     const showSuccessMessage = useSignal(false)
 
     const reponseRegister = User.AccountRegister(registrationData)

@@ -16,8 +16,8 @@ export const useLogin = () => {
     // TODO: Navigate to route
     const navigate = useNavigate()
 
-    // TODO: Response Fetch //
-    const responseData = useSignal<BaseReponse<ILoginResponseDto>>()
+    // TODO: Response Fetch /
+    const responseData = useSignal<BaseReponse<string, ILoginResponseDto>>()
     const auth = useContext(AuthContext)
 
     return {
