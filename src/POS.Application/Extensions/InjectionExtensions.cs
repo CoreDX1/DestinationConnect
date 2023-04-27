@@ -2,7 +2,6 @@ using System.Reflection;
 using FluentValidation;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using POS.Application.Commons.Base;
 using POS.Application.DTO.Request.User;
 using POS.Application.ErrorValidation.UserError;
 using POS.Application.Interface;
