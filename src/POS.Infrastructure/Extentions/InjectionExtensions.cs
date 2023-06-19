@@ -17,7 +17,7 @@ public static class InjectionExtensions
         var assebly = typeof(DestinationConnectContext).Assembly.FullName;
         services.AddDbContext<DestinationConnectContext>(
             options =>
-                options.UseNpgsql(
+                options.UseSqlServer(
                     configuration.GetConnectionString("POSConnectionString"),
                     b => b.MigrationsAssembly(assebly)
                 ),

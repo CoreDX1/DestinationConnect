@@ -1,17 +1,17 @@
 -- TODO: Tabla de alojamientos
 
 create table Lodging(
-    id SERIAL PRIMARY KEY,
-    locality VARCHAR(50),
-    date_start DATE,
-    date_end DATE,
-    rooms INTEGER,
-    capacity INTEGER,
-    state INTEGER,
-    price INTEGER,
-    description TEXT,
-    lodging_type VARCHAR(50),
-    rating INTEGER
+    Id SERIAL PRIMARY KEY,
+    Locality VARCHAR(50),
+    Date_start DATE,
+    Date_end DATE,
+    Rooms INTEGER,
+    Capacity INTEGER,
+    State INTEGER,
+    Price INTEGER,
+    Description TEXT,
+    Lodging_type VARCHAR(50),
+    Rating INTEGER
 );
 
 -- TODO : Table the Lodging
