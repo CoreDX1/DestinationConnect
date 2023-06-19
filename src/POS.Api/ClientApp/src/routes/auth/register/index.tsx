@@ -8,24 +8,25 @@ export default component$(() => {
         registrationData,
         resgistrationResponse,
         showSuccessMessage,
-        reponseRegister,
+        responseRegister,
     } = useFetchUser()
 
     const registerAccount = $(async () => {
-        resgistrationResponse.value = await reponseRegister
+        resgistrationResponse.value = await responseRegister(registrationData)
         showSuccessMessage.value = true
         setTimeout(() => (showSuccessMessage.value = false), 5000)
     })
 
     const updateRegistrationData = $((e: QwikChangeEvent<HTMLInputElement>) => {
         const { value, name } = e.target
+        console.log(value, name)
         registrationData[name] = value
     })
 
     return (
-        <section class="bg-gray-50 dark:bg-gray-900">
+        <section class="bg-gray-50">
             <div class="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg-py-0">
-                <div class="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
+                <div class="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0">
                     <div class="p-6 space-y-4 md:space-y-6 sm:p-8">
                         <div class="text-center">
                             <SuccessMessage
@@ -62,7 +63,7 @@ export default component$(() => {
                             <div>
                                 <label
                                     for="lastname"
-                                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                                    class="block mb-2 text-sm font-medium text-gray-900"
                                 >
                                     Your Lastname
                                 </label>
@@ -76,7 +77,7 @@ export default component$(() => {
                                 )}
                                 <input
                                     type="text"
-                                    class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                    class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg w-full p-2.5"
                                     placeholder="lastname"
                                     value={registrationData.lastname}
                                     name="lastname"
@@ -84,7 +85,7 @@ export default component$(() => {
                                 />
                             </div>
                             <div>
-                                <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                                <label class="block mb-2 text-sm font-medium text-gray-900">
                                     Your Email
                                 </label>
                                 {!resgistrationResponse.value?.success && (
@@ -98,14 +99,16 @@ export default component$(() => {
                                 <input
                                     type="email"
                                     placeholder="user@gmail.com"
-                                    class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                    class={
+                                        "bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg w-full p-2.5"
+                                    }
                                     value={registrationData.email}
                                     name="email"
                                     onChange$={updateRegistrationData}
                                 />
                             </div>
                             <div>
-                                <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                                <label class="block mb-2 text-sm font-medium text-gray-900">
                                     Your Password
                                 </label>
                                 {!resgistrationResponse.value?.success && (
@@ -120,7 +123,7 @@ export default component$(() => {
                                     type="password"
                                     placeholder="••••••••"
                                     autoComplete="on"
-                                    class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                    class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg w-full p-2.5"
                                     value={registrationData.password}
                                     name="password"
                                     onChange$={updateRegistrationData}

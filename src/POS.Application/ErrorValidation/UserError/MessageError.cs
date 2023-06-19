@@ -57,7 +57,7 @@ public class MessageError : IMessageError
 
         bool isEmailValid = await _unitOfWork.Users.ValidateEmail(user);
 
-        if (!isEmailValid)
+        if (isEmailValid)
             errorResponse.Email.Add("Email is not valid");
 
         var validateResult = await _validatorRegister.ValidateAsync(user);

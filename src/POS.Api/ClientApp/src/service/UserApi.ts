@@ -1,23 +1,20 @@
-import { type BaseReponse } from "~/Commons/Base/BaseResponse"
+import { type BaseRegister } from "~/Commons/Base/BaseResponse"
 import axios from "axios"
 import type { LoginData, Register } from "~/Interface/Request/IUserRequest"
 import { URL_API } from "~/data/constantes"
-import { type ILoginResponseDto } from "~/Interface/Response/ILoginResponseDto"
+import { type BaseLoginResponse } from "~/Interface/Response/ILoginResponseDto"
 
 export class User {
-
-    static async AccountLogin(user: LoginData): Promise<BaseReponse<ILoginResponseDto>> {
-        const { data } = await axios.post<BaseReponse<ILoginResponseDto>>(
+    static async AccountLogin(user: LoginData) {
+        const { data } = await axios.post<BaseLoginResponse>(
             `${URL_API}/Auth/Login`,
             user
         )
         return data
     }
 
-    static async AccountRegister(
-        user: Register
-    ): Promise<BaseReponse<boolean>> {
-        const { data } = await axios.post<BaseReponse<boolean>>(
+    static async AccountRegister(user: Register) {
+        const { data } = await axios.post<BaseRegister>(
             `${URL_API}/Auth/Register`,
             user
         )

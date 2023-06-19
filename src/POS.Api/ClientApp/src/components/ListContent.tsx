@@ -46,6 +46,21 @@ export const ListContent = component$<PropLodgingPage>(
 
         return (
             <div>
+                <div class="flex justify-center gap-4">
+                    <button
+                        class="border p-1 border-black rounded-xl hover:bg-[#999999]"
+                        onClick$={() => (handlePage("next"), newUrl("next"))}
+                    >
+                        Siguiente
+                    </button>
+                    <span class="font-bold">{valorPage}</span>
+                    <button
+                        class="border p-1 border-black rounded-xl hover:bg-[#999999]"
+                        onClick$={() => (handlePage("prev"), newUrl("prev"))}
+                    >
+                        Anterior
+                    </button>
+                </div>
                 {todo.value?.data?.items.map((item) => (
                     <div key={item.id} class="flex justify-center">
                         <div class="m-3 h-[250px] border border-black rounded-xl grid grid-cols-text">
@@ -81,21 +96,6 @@ export const ListContent = component$<PropLodgingPage>(
                         </div>
                     </div>
                 ))}
-                <div class="flex justify-center gap-4">
-                    <button
-                        class="border p-1 border-black rounded-xl hover:bg-[#999999]"
-                        onClick$={() => (handlePage("next"), newUrl("next"))}
-                    >
-                        Siguiente
-                    </button>
-                    <span class="font-bold">{valorPage}</span>
-                    <button
-                        class="border p-1 border-black rounded-xl hover:bg-[#999999]"
-                        onClick$={() => (handlePage("prev"), newUrl("prev"))}
-                    >
-                        Anterior
-                    </button>
-                </div>
             </div>
         )
     }

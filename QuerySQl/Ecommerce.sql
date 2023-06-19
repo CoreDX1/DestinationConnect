@@ -101,8 +101,11 @@ VALUES
 ('Miami', '2023-09-15', '2023-09-20', 2, 4, 1, 1020, 'Elegant condo with panoramic bay views', 'Hotel', 4),
 ('Miami', '2023-10-10', '2023-10-20', 3, 6, 1, 2080, 'Private villa with a tropical garden', 'Apartment', 5);
 
-create table UserRol(
-    id SERIAL PRIMARY KEY,
-    rol VARCHAR(50)
-    id_user INTEGER,
+
+CREATE TABLE User (
+    Id int PRIMARY KEY IDENTITY(1,1),
+    Email VARCHAR(100) NOT NULL,
+    First_name VARCHAR(100),
+    Last_name VARCHAR(100),
+    Password VARCHAR(100)
 );
